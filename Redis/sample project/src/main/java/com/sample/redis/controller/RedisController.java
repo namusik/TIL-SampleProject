@@ -11,14 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RedisController {
 
-    public final RedisService redisService;
+    private final RedisService redisService;
 
-    @PostMapping("api/redisTest")
-    public String send(@RequestBody ChatMessage chatMessage) {
+    @PostMapping("api/redisStringTest")
+    public String sendString(@RequestBody ChatMessage chatMessage) {
         redisService.setRedisStringValue(chatMessage);
 
         redisService.getRedisStringValue("sender");
         redisService.getRedisStringValue("context");
+
+        return "success";
+    }
+
+    @PostMapping("api/redisTest")
+    public String send(@RequestBody ChatMessage chatMessage) {
+        redisService.setRedisValue(chatMessage);
+
+        String key = chatMessage.getSender();
+        redisService.getRedisValue(key);
 
         return "success";
     }
