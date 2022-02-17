@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <title>Websocket Chat</title>
     <meta charset="utf-8">
@@ -30,7 +30,7 @@
     </div>
     <ul class="list-group">
         <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
-            {{item.name}}
+            {{item.roomName}}
         </li>
     </ul>
 </div>
@@ -62,7 +62,7 @@
                     axios.post('/chat/room', params)
                         .then(
                             response => {
-                                alert(response.data.name+"방 개설에 성공하였습니다.")
+                                alert(response.data.roomName+"방 개설에 성공하였습니다.")
                                 this.room_name = '';
                                 this.findAllRoom();
                             }
@@ -72,7 +72,7 @@
             },
             enterRoom: function(roomId) {
                 var sender = prompt('대화명을 입력해 주세요.');
-                if(sender != "") {
+                if(sender !== "") {
                     localStorage.setItem('wschat.sender',sender);
                     localStorage.setItem('wschat.roomId',roomId);
                     location.href="/chat/room/enter/"+roomId;
