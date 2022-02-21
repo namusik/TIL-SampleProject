@@ -1,5 +1,13 @@
 spring:
   kafka:
     bootstrap-servers: localhost:9092
+  datasource:
+    url: jdbc:mysql://localhost:3307/stompKafka
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 server:
   port: 8081
