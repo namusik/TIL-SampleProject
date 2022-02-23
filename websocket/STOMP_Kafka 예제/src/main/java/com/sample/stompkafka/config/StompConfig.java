@@ -22,4 +22,5 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
 
         registry.setApplicationDestinationPrefixes("/app");
     }
+
 }
