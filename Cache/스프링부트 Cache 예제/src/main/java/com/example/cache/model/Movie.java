@@ -1,14 +1,16 @@
 package com.example.cache.model;
 
-import lombok.AllArgsConstructor;
+import com.example.cache.dto.MovieRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
 @Getter
+@ToString
 public class Movie {
 
     @Id
@@ -20,5 +22,9 @@ public class Movie {
 
     public Movie(String title) {
         this.title = title;
+    }
+
+    public void update(MovieRequestDto movieRequestDto) {
+        this.title = movieRequestDto.getTitle();
     }
 }
