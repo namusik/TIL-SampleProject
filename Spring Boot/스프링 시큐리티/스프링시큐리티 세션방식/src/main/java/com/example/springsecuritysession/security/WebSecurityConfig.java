@@ -1,4 +1,4 @@
-package com.example.springsecuritysession.config;
+package com.example.springsecuritysession.security;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -29,7 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/user/login")
                 .defaultSuccessUrl("/")
                 .failureUrl("/user/login?error")
-                .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/user/logout")
