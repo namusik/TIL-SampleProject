@@ -1,10 +1,12 @@
 package com.example.springsecuritysession.service;
 
+import com.example.springsecuritysession.dto.UserDto;
+import com.example.springsecuritysession.model.User;
+import com.example.springsecuritysession.model.UserRoleEnum;
 import com.example.springsecuritysession.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
