@@ -8,8 +8,11 @@
 <body>
 <div class="container">
     <div id="header-title-login-user">
-        <span th:text="${id}"></span>님 어서오세요
+        <span th:text="${user.nickname}"></span>님 어서오세요
     </div>
+    <a id="login" href="/user/login">
+        로그인
+    </a>
     <a id="logout-text" href="/user/logout">
         로그아웃
     </a>

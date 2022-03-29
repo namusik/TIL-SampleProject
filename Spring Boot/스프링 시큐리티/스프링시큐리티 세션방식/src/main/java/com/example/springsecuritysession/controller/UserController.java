@@ -37,13 +37,6 @@ public class UserController {
         return user;
     }
 
-    @ResponseBody
-    @GetMapping("user/nicknamecheck")
-    public User nicknameCheck(@RequestBody String nickname_give) {
-        System.out.println(nickname_give);
-        return userService.nicknameCheck(nickname_give);
-    }
-
     //로그인 페이지 이동
     @GetMapping("user/login")
     public String loginForm(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
@@ -56,13 +49,6 @@ public class UserController {
         }
         return "login";
     }
-
-    @PostMapping("user/check_dup")
-    @ResponseBody
-    public String nicknameDuplicate(@ModelAttribute("username_give") String username) {
-        return userService.findByNickname(username);
-    }
-
 }
 
 

@@ -25,10 +25,10 @@ public class UserService {
 
 
     public User signup(UserDto userDto) {
-        String nickname = userDto.getNickname();
+        String email = userDto.getEmail();
 
         // 회원 ID 중복 확인
-        Optional<User> found = userRepository.findByNickname(nickname);
+        Optional<User> found = userRepository.findByEmail(email);
         if (found.isPresent()) {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
@@ -37,7 +37,7 @@ public class UserService {
         String password = passwordEncoder.encode(userDto.getPassword());
 
         // 사용자 ROLE 확인
-        UserRoleEnum role = UserRoleEnum.USER;
+        UserRoleEnum role = UserRoleEnum.ROLE_MEMBER;
         //true면 == 관리자이면
         //boolean 타입의 getter는 is를 붙인다
         if (userDto.isAdmin()) {
@@ -45,27 +45,11 @@ public class UserService {
                 throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
             }
             //role을 admin으로 바꿔준다
-            role = UserRoleEnum.ADMIN;
+            role = UserRoleEnum.ROLE_ADMIN;
         }
 
-        User user = new User(nickname, password, role);
+        User user = new User(email, password, role);
         userRepository.save(user);
         return user;
-    }
-
-    public User nicknameCheck(String nickname_give) {
-
-        return userRepository.findByNickname(nickname_give)
-                .orElse(null);
-    }
-
-    public String findByNickname(String username) {
-        User user = userRepository.findByNickname(username)
-                .orElse(null);
-        if (user == null) {
-            return "false";
-        } else {
-            return "true";
-        }
     }
 }
