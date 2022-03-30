@@ -1,6 +1,8 @@
 package com.example.springsecuritysession.service;
 
 import com.example.springsecuritysession.dto.UserDto;
+import com.example.springsecuritysession.exception.CustomException;
+import com.example.springsecuritysession.exception.ErrorCode;
 import com.example.springsecuritysession.model.User;
 import com.example.springsecuritysession.model.UserRoleEnum;
 import com.example.springsecuritysession.repository.UserRepository;
@@ -21,7 +23,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
+    private static final String ADMIN_PW = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
 
     public User signup(UserDto userDto) {
@@ -43,8 +45,8 @@ public class UserService {
         //true면 == 관리자이면
         //boolean 타입의 getter는 is를 붙인다
         if (userDto.isAdmin()) {
-            if (!userDto.getAdminToken().equals(ADMIN_TOKEN)) {
-                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+            if (!userDto.getAdminToken().equals(ADMIN_PW)) {
+                throw new CustomException(ErrorCode.ADMIN_TOKEN);
             }
             //role을 admin으로 바꿔준다
             role = UserRoleEnum.ROLE_ADMIN;

@@ -18,7 +18,7 @@
     </div>
     <div th:unless="${user} == ''">
         <div id="header-title-login-user">
-            <span th:text="${user.nickname}">님 환영합니다~!</span>
+            <span th:text="${user.nickname}"></span>님 환영합니다~!
         <a id="logout-text" href="/user/logout">
             로그아웃
         </a>

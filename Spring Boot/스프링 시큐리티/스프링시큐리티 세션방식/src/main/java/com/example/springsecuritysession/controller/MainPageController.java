@@ -15,6 +15,7 @@ public class MainPageController {
     public String mainPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
         if (userDetails != null) {
             User user = userDetails.getUser();
+            System.out.println(user.getRole());
             model.addAttribute("user", user);
         } else {
             model.addAttribute("user", "");

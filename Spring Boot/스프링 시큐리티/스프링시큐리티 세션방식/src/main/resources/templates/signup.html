@@ -112,8 +112,9 @@
                         window.location.href = "/user/login";
 
                     },
-                    error: function (error) {
-                        alert("관리자 번호가 다릅니다")
+                    error: function (result) {
+                        console.log(result["responseJSON"]);
+                        alert(result["responseJSON"].msg)
                     },
                 });
             }
