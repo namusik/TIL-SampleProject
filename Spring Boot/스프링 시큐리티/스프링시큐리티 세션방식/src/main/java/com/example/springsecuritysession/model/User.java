@@ -16,6 +16,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false, unique = true)
+    private String nickname;
+
     @Column(nullable = false)
     private String password;
 
@@ -23,8 +26,9 @@ public class User {
     @Enumerated(value = EnumType.STRING) //저장될때는 string으로 저장되도록
     private UserRoleEnum role;
 
-    public User(String email, String password, UserRoleEnum role) {
+    public User(String email, String nickname, String password, UserRoleEnum role) {
         this.email = email;
+        this.nickname = nickname;
         this.password = password;
         this.role = role;
     }

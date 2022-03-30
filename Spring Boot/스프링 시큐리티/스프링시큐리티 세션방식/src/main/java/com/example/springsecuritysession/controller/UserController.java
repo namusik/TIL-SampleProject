@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     //회원가입 페이지 이동
-    @GetMapping("user/signup")
+    @GetMapping("/user/signup")
     public String signupForm(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
         try {
             User user = userDetails.getUser();
@@ -30,15 +30,17 @@ public class UserController {
 
     //회원가입
     @ResponseBody
-    @PostMapping("user/signup")
+    @PostMapping("/user/signup")
     public User signUp(@RequestBody UserDto userDto) {
+        System.out.println("회원가입컨트롤러");
+        System.out.println(userDto);
         User user = userService.signup(userDto);
         System.out.println(user);
         return user;
     }
 
     //로그인 페이지 이동
-    @GetMapping("user/login")
+    @GetMapping("/user/login")
     public String loginForm(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
         try {
             User user = userDetails.getUser();

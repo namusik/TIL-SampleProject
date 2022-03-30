@@ -37,38 +37,6 @@
             return regExp.test(asValue);
         }
 
-        function nicknameDuplicate() {
-            let username = $('#input-nickname').val();
-            if (username === "") {
-                $('.nicknamevalidation').text("닉네임을 입력해주세요");
-                $('#input-nickname').focus();
-            }else if (!is_nickname(username)) {
-                $('.nicknamevalidation').text("닉네임은 최소 3자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9)만 쓸 수 있습니다");
-                $('#input-nickname').focus();
-            } else {
-                $.ajax({
-                    type: "POST",
-                    url: "/user/check_dup",
-                    data: {
-                        username_give: username
-                    },
-                    success: function (response) {
-                        let result = response;
-
-                        console.log(result);
-                        if (result === "true") {
-                            $('.nicknamevalidation').text("이미 존재하는 아이디입니다.");
-                            $("#input-nickname").focus();
-
-                        } else {
-                            $('.nicknamevalidation').text("사용할 수 있는 아이디입니다.");
-                            duplicateOk = true;
-                        }
-                    }
-                });
-            }
-        }
-
         function validatePassword() {
             let username = $('#input-nickname').val();
             let password = $('#input-password').val();
@@ -110,17 +78,20 @@
         }
 
         function signUp() {
+            let email = $('#input-email').val();
+            console.log(email);
             let nickname = $('#input-nickname').val();
             console.log(nickname);
             let password = $('#input-password').val();
             console.log(password);
             let password2 = $('#input-password2').val();
             console.log(duplicateOk, validatepassword, samepassword);
-            if(!duplicateOk||nickname===""){
-                alert("닉네임 중복체크를 해주세요")
-                duplicateOk = false;
-                $('.nicknamevalidation').empty();
-            }else if (!validatepassword||password==="") {
+            var checkBox = document.getElementById("admin-check");
+            let admin = checkBox.checked;
+            console.log(admin);
+            let adminToken = $('#admin-token').val();
+            console.log(adminToken);
+            if (!validatepassword||password==="") {
                 alert("비밀번호 형식을 확인해 주세요")
                 validatepassword = false;
                 samepassword = false;
@@ -130,7 +101,7 @@
                 samepassword = false;
                 $('.passwordsame').empty();
             }else {
-                let data = {'nickname': nickname, 'password': password};
+                let data = {'email': email, 'nickname': nickname, 'password': password,'admin' : admin, 'adminToken' : adminToken};
                 $.ajax({
                     type: "POST",
                     url: "/user/signup",
@@ -140,7 +111,10 @@
                         alert("회원가입 완료");
                         window.location.href = "/user/login";
 
-                    }
+                    },
+                    error: function (error) {
+                        alert("관리자 번호가 다릅니다")
+                    },
                 });
             }
         }
@@ -152,6 +126,9 @@
 <div id="login-form">
     <div id="login-title">Sign up Select Shop</div>
     <div>
+        <div class="login-id-label">이메일</div>
+        <input type="text" name="email" placeholder="Email" class="login-input-box" id="input-email" >
+
         <div class="login-id-label">닉네임</div>
         <input type="text" name="nickname" placeholder="Nickname" class="login-input-box" id="input-nickname" >
         <a onclick="nicknameDuplicate()">중복확인</a>

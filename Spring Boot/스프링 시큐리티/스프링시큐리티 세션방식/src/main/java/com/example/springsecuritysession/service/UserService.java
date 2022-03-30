@@ -33,6 +33,8 @@ public class UserService {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
 
+        String nickname = userDto.getNickname();
+
         //패스워드 암호화
         String password = passwordEncoder.encode(userDto.getPassword());
 
@@ -48,7 +50,7 @@ public class UserService {
             role = UserRoleEnum.ROLE_ADMIN;
         }
 
-        User user = new User(email, password, role);
+        User user = new User(email, nickname, password, role);
         userRepository.save(user);
         return user;
     }

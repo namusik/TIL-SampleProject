@@ -7,15 +7,22 @@
 </head>
 <body>
 <div class="container">
-    <div id="header-title-login-user">
-        <span th:text="${user.nickname}"></span>님 어서오세요
+    <div th:if="${user} == ''">
+        <span>안녕하세요 회원가입 또는 로그인 해주세요</span>
+        <a id="signup" href="/user/signup">
+            회원가입
+        </a>
+        <a id="login" href="/user/login">
+            로그인
+        </a>
     </div>
-    <a id="login" href="/user/login">
-        로그인
-    </a>
-    <a id="logout-text" href="/user/logout">
-        로그아웃
-    </a>
+    <div th:unless="${user} == ''">
+        <div id="header-title-login-user">
+            <span th:text="${user.nickname}">님 환영합니다~!</span>
+        <a id="logout-text" href="/user/logout">
+            로그아웃
+        </a>
+    </div>
 </div>
 </body>
 </html>

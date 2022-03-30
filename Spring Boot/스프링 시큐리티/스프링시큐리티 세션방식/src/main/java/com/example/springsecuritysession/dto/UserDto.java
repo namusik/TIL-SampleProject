@@ -7,8 +7,20 @@ import lombok.Setter;
 @Setter
 public class UserDto {
     private String email;
+    private String nickname;
     private String password;
-    private boolean admin = false;
-    private String adminToken = "";
+    private boolean admin;
+    private String adminToken;
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", admin=" + admin +
+                ", adminToken='" + adminToken + '\'' +
+                '}';
+    }
 }
 

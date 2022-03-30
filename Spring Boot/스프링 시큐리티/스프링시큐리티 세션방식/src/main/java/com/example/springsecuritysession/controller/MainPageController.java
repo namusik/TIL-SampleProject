@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class mainPageContoller {
+public class MainPageController {
 
     @GetMapping("/")
     public String mainPage(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
