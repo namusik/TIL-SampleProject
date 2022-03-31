@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class EmailSenderDto {
 
-    public static final String FROM_EMAIL = "ws_nam@ioisoft.com"; // 보내는 사람
+    public static final String FROM_EMAIL = "SES에 등록된 이메일"; // 보내는 사람
 
     private List<String> receiver; // 받는 사람
     private String subject; // 제목
