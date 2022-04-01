@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호변경</title>
+</head>
+<body>
+<form method="post" action="/user/resetpw">
+    <input type="hidden" name="email" th:value="${email}">
+    비밀번호 : <input type="password" name="password">
+    <button type="submit">다음</button>
+</form>
+</body>
+</html>

@@ -1,8 +1,10 @@
 package com.example.aws_ses.controller;
 
+import com.example.aws_ses.security.Aes;
 import com.example.aws_ses.service.SendEmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,12 +17,22 @@ public class SendEmailController {
 
     private final SendEmailService sendEmailService;
 
-    @PostMapping("api/sendEmail")
-    public void sendEmail() {
+    //이메일 전송 API
+    @PostMapping("user/api/sendEmail")
+    public void sendEmail(@RequestParam("email") String email) throws Exception {
+
+        //이메일 받아와서 list에 add
         List<String> receivers = new ArrayList<>();
-        receivers.add("wsnam0418@gmail.com");
+        receivers.add(email);
+        //제목
         String subject = "SES Test";
-        String content = "http://localhost:8080/user/resetpw";
+
+        //링크를 보낼 때, email 부분을 문자열로 바꿔줘야함. 노출이 안되도록. Aes의 방식을 사용하니 암호문자에 '/'가 포함되서 인식오류
+//        Aes aes = new Aes();
+//        String enc = aes.encrypt(email);
+
+        //패스워드 입력할 수 있는 API URI를 본문에 담아서 보내줌.
+        String content = "http://localhost:8080/user/resetpw/"+email;
 
         sendEmailService.send(subject, content, receivers);
     }

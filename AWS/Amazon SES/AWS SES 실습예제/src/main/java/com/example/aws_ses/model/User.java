@@ -26,4 +26,8 @@ public class User {
         this.password = password;
         this.name = name;
     }
+
+    public void updatePw(String password) {
+        this.password = password;
+    }
 }
