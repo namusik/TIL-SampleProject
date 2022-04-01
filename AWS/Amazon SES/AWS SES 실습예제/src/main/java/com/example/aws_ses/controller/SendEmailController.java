@@ -20,7 +20,7 @@ public class SendEmailController {
         List<String> receivers = new ArrayList<>();
         receivers.add("wsnam0418@gmail.com");
         String subject = "SES Test";
-        String content = "이메일 테스트 전달됐나요?";
+        String content = "http://localhost:8080/user/resetpw";
 
         sendEmailService.send(subject, content, receivers);
     }
