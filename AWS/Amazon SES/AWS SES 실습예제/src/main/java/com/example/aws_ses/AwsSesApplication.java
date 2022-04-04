@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
@@ -28,7 +27,7 @@ class CommandLineRunnerImpl implements CommandLineRunner {
     //스프링부트 초기화 종료 후 실행되도록. 회원정보 자동 저장.
     @Override
     public void run(String... args) throws Exception {
-        User myUser = new User("nswooho@naver.com", "1234", "treesick");
+        User myUser = new User("이메일", "1234", "treesick");
         userRepository.save(myUser);
     }
 }

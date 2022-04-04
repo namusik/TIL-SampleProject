@@ -5,7 +5,6 @@ import com.example.aws_ses.service.SendEmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class SendEmailController {
 
     //이메일 전송 API
     @PostMapping("user/api/sendEmail")
-    public void sendEmail(@RequestParam("email") String email) throws Exception {
+    public String sendEmail(@RequestParam("email") String email) throws Exception {
 
         //이메일 받아와서 list에 add
         List<String> receivers = new ArrayList<>();
@@ -35,5 +34,7 @@ public class SendEmailController {
         String content = "http://localhost:8080/user/resetpw/"+email;
 
         sendEmailService.send(subject, content, receivers);
+
+        return "true";
     }
 }

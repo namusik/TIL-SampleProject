@@ -4,7 +4,6 @@ import com.example.aws_ses.model.User;
 import com.example.aws_ses.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 
 @Service

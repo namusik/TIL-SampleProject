@@ -1,7 +1,6 @@
 package com.example.aws_ses.model;
 
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity

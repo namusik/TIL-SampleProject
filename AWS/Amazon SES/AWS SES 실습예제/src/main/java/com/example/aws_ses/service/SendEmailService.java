@@ -5,7 +5,6 @@ import com.amazonaws.services.simpleemail.model.SendEmailResult;
 import com.example.aws_ses.dto.EmailSenderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
