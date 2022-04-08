@@ -1,5 +1,8 @@
 package com.example.springsecuritysession.model;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRoleEnum {
 
     //spring security가 제공하는 ROLE 네이밍 정책이 <ROLE_권한>이므로 맞춰서 작성해준다.

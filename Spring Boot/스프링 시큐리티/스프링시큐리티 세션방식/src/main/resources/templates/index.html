@@ -19,10 +19,14 @@
     <div th:unless="${user} == ''">
         <div id="header-title-login-user">
             <span th:text="${user.nickname}"></span>님 환영합니다~!
-        <a id="logout-text" href="/user/logout">
-            로그아웃
-        </a>
+            <span th:text="${user.role.getDescription()}"></span>
+            <a id="admin" href="/api/admin">
+                관리자페이지
+            </a>
+            <a id="logout-text" href="/user/logout">
+                로그아웃
+            </a>
+        </div>
     </div>
-</div>
 </body>
 </html>
