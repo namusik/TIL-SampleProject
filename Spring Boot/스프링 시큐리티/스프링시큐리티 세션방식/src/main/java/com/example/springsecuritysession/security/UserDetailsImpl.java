@@ -16,8 +16,10 @@ import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
+    //직접 정의한 User 클래스를 필도로 가지게 함.
     private final User user;
 
+    //생성자를 통해 유지
     public UserDetailsImpl(User user) {
         this.user = user;
     }
@@ -58,15 +60,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        //사용자의 role을 가져오기
-//        UserRoleEnum role = user.getRole();
-//        //권한명 가져오기(ROLE_)
-//        String authority = role .getAuthority();
-//
-//        //collection 형태에 맞춰서 보내야 함
-//        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
-//        Collection<GrantedAuthority> authorities = new ArrayList<>();
-//        authorities.add(simpleGrantedAuthority);
         List<GrantedAuthority> authorityList = AuthorityUtils.createAuthorityList(user.getRole().toString());
         return authorityList;
     }

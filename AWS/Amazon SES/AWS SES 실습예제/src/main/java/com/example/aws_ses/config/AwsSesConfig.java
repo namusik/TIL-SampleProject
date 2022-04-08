@@ -25,5 +25,4 @@ public class AwsSesConfig {
 
         return AmazonSimpleEmailServiceClientBuilder.standard().withCredentials(awsStaticCredentialsProvider).withRegion("us-east-1").build();
     }
-
 }

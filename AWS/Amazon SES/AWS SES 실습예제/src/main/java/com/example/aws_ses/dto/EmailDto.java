@@ -1,22 +1,26 @@
 package com.example.aws_ses.dto;
 
 import com.amazonaws.services.simpleemail.model.*;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class EmailSenderDto {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class EmailDto {
     //AWS SES에 등록된 도메인명과 일치해야함
-    public static final String FROM_EMAIL = "SES에 등록된 이메일"; // 보내는 사람
+    static final String FROM_EMAIL = "SES에 등록된 이메일"; // 보내는 사람
 
     private List<String> receiver; // 받는 사람
     private String subject; // 제목
     private String content; // 본문
+
+    public EmailDto(List<String> receiver, String subject, String content) {
+        this.receiver = receiver;
+        this.subject = subject;
+        this.content = content;
+    }
 
     //SendEmailRequest 객체형태로 맞춰주기
     public SendEmailRequest toSendRequestDto() {
