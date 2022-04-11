@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //csfr 사용안함
+        //csrf 사용안함
         http.csrf().disable();
 
         //URL 인증여부 설정.
@@ -52,10 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/");
 
-        //비인가 경로 요청시
+        //비인가자 요청시 보낼 Api URI
         http.exceptionHandling().accessDeniedPage("/forbidden");
 
-        //구현해준 UserDetailsServiceImpl 등록
-        http.userDetailsService(userDetailsServiceImpl);
     }
 }

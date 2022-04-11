@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomExceptionHandler {
     @ExceptionHandler(value = {CustomException.class})
     public ResponseEntity<Object> handleAdminErrorException(CustomException exception) {
-        log.error("throw customExceptoin : {}", exception.getErrorCode());
+        log.error("throw customException : {}", exception.getErrorCode());
         ResponseDto restApiException = new ResponseDto(exception.getErrorCode().getHttpStatus().value(), exception.getErrorCode().getDetail(), "");
         return new ResponseEntity<>(restApiException, exception.getErrorCode().getHttpStatus());
     }
