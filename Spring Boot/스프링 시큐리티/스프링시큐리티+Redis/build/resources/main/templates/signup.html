@@ -28,10 +28,7 @@
             }
         });
 
-        function is_nickname(asValue) {
-            var regExp = /^[-a-zA-Z0-9]{3,}$/;
-            return regExp.test(asValue);
-        }
+
         function is_password(asValue) {
             var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{4,}$/;
             return regExp.test(asValue);
@@ -132,7 +129,6 @@
 
         <div class="login-id-label">닉네임</div>
         <input type="text" name="nickname" placeholder="Nickname" class="login-input-box" id="input-nickname" >
-        <a onclick="nicknameDuplicate()">중복확인</a>
         <div class="nicknamevalidation"></div>
 
         <div class="login-id-label">비밀번호</div>

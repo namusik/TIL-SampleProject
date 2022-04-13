@@ -6,23 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div class="container">
-        <div th:if="${user} == ''">
-            <span>안녕하세요 회원가입 또는 로그인 해주세요</span>
-            <a id="signup" href="/user/signup">
-                회원가입
+<div class="container">
+    <div th:if="${user} == ''">
+        <span>안녕하세요 회원가입 또는 로그인 해주세요</span>
+        <a id="signup" href="/user/signup">
+            회원가입
+        </a>
+        <a id="login" href="/user/login">
+            로그인
+        </a>
+    </div>
+    <div th:unless="${user} == ''">
+        <div id="header-title-login-user">
+            <span th:text="${user.nickname}"></span>님 환영합니다~!
+            <span th:text="${user.role.getDescription()}"></span>
+            <a id="admin" href="/api/admin">
+                관리자페이지
             </a>
-            <a id="login" href="/user/login">
-                로그인
-            </a>
-        </div>
-        <div th:unless="${user} == ''">
-            <div id="header-title-login-user">
-                <span th:text="${user.nickname}"></span>님 환영합니다~!
             <a id="logout-text" href="/user/logout">
                 로그아웃
             </a>
-            </div>
         </div>
     </div>
 </body>
