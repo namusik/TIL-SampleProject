@@ -1,5 +1,6 @@
 package com.sample.redis.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sample.redis.model.ChatMessage;
 import com.sample.redis.service.RedisService;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +28,13 @@ public class RedisController {
     }
 
     @PostMapping("api/redisTest")
-    public String send(@RequestBody ChatMessage chatMessage) {
+    public String send(@RequestBody ChatMessage chatMessage) throws JsonProcessingException {
         redisService.setRedisValue(chatMessage);
 
         String key = chatMessage.getSender();
-        redisService.getRedisValue(key);
+        ChatMessage chatMessage1 = redisService.getRedisValue(key, ChatMessage.class);
 
-        return "success";
+        return chatMessage1.getContext();
     }
 
     @GetMapping("api/session")
