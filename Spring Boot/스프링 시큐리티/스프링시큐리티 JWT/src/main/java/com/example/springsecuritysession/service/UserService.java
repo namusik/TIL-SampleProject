@@ -1,5 +1,6 @@
 package com.example.springsecuritysession.service;
 
+import com.example.springsecuritysession.dto.LoginUserDto;
 import com.example.springsecuritysession.dto.UserDto;
 import com.example.springsecuritysession.exception.CustomException;
 import com.example.springsecuritysession.exception.ErrorCode;
@@ -54,6 +55,17 @@ public class UserService {
 
         User user = new User(email, nickname, password, role);
         userRepository.save(user);
+        return user;
+    }
+
+    //로그인
+    public User login(LoginUserDto loginUserDto) {
+        User user = userRepository.findByEmail(loginUserDto.getEmail()).orElseThrow(
+                () -> new CustomException(ErrorCode.NO_USER)
+        );
+        if (!passwordEncoder.matches(loginUserDto.getPassword(), user.getPassword())) {
+            throw new CustomException(ErrorCode.NO_USER);
+        }
         return user;
     }
 }

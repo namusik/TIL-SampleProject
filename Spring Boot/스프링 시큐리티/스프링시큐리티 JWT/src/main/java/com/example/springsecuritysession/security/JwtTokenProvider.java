@@ -1,5 +1,6 @@
 package com.example.springsecuritysession.security;
 
+import com.example.springsecuritysession.exception.CustomException;
 import com.example.springsecuritysession.model.UserRoleEnum;
 import com.example.springsecuritysession.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
@@ -70,7 +71,7 @@ public class JwtTokenProvider {
 
     // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-AUTH-TOKEN");
+        return request.getHeader("JWT");
     }
 
     // 토큰의 유효성 + 만료일자 확인  // -> 토큰이 expire되지 않았는지 True/False로 반환해줌.

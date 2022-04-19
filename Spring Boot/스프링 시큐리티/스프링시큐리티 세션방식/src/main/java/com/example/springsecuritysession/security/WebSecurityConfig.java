@@ -12,10 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Bean
     public BCryptPasswordEncoder encoderPassword() {

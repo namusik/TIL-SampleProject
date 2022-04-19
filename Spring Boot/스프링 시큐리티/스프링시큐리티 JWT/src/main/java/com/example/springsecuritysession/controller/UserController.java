@@ -1,7 +1,10 @@
 package com.example.springsecuritysession.controller;
 
+import com.example.springsecuritysession.dto.LoginUserDto;
 import com.example.springsecuritysession.dto.UserDto;
 import com.example.springsecuritysession.model.User;
+import com.example.springsecuritysession.model.UserRoleEnum;
+import com.example.springsecuritysession.security.JwtTokenProvider;
 import com.example.springsecuritysession.security.UserDetailsImpl;
 import com.example.springsecuritysession.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -19,6 +25,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     //회원가입 페이지 이동
     @GetMapping("/user/signup")
@@ -54,6 +61,20 @@ public class UserController {
             return "login";
         }
         return "login";
+    }
+
+    @PostMapping("/user/login")
+    @ResponseBody
+    public String login(LoginUserDto loginUserDto, HttpServletResponse response) {
+        System.out.println("loginUserDto = " + loginUserDto);
+        User user = userService.login(loginUserDto);
+        String checkEmail = user.getEmail();
+        UserRoleEnum role = user.getRole();
+
+        String token = jwtTokenProvider.createToken(checkEmail, role);
+        response.setHeader("JWT", token);
+
+        return token;
     }
 
     //시큐리티홀더에 저장된 로그인 유저 정보 꺼내보기
