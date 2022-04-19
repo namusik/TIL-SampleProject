@@ -1,5 +1,6 @@
 package com.example.springsecuritysession.security;
 
+import com.example.springsecuritysession.exception.CustomAuthenticationEntryPoint;
 import com.example.springsecuritysession.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -51,6 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //JwtFilter 추가
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        //exception handling
+        http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
     }
 }
