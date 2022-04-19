@@ -8,12 +8,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public BCryptPasswordEncoder encoderPassword() {
@@ -27,29 +31,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //프론트엔드가 별도로 존재하여 rest Api로 구성한다고 가정
+        http.httpBasic().disable();
+
         //csrf 사용안함
         http.csrf().disable();
+
+        //세선사용 x
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         //URL 인증여부 설정.
         http.authorizeRequests()
                 .antMatchers( "/user/signup", "/", "/user/login", "/css/**").permitAll()
                 .anyRequest().authenticated();
 
-        //로그인 관련 설정.
-        http.formLogin()
-                .loginPage("/user/login")
-                .loginProcessingUrl("/user/login") //Post 요청
-                .defaultSuccessUrl("/")
-                .failureUrl("/user/login?error")
-                .permitAll();
-
-        //로그아웃 설정
-        http.logout()
-                .logoutUrl("/user/logout")
-                .logoutSuccessUrl("/");
 
         //비인가자 요청시 보낼 Api URI
         http.exceptionHandling().accessDeniedPage("/forbidden");
+
+        //JwtFilter 추가
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
     }
 }
