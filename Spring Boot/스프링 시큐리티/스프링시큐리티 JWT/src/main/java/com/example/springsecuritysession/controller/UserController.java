@@ -43,10 +43,8 @@ public class UserController {
     @ResponseBody
     @PostMapping("/user/signup")
     public User signUp(@RequestBody UserDto userDto) {
-        System.out.println("회원가입컨트롤러");
-        System.out.println(userDto);
         User user = userService.signup(userDto);
-        System.out.println(user);
+
         return user;
     }
 
@@ -66,7 +64,7 @@ public class UserController {
     @PostMapping("/user/login")
     @ResponseBody
     public String login(LoginUserDto loginUserDto, HttpServletResponse response) {
-        System.out.println("loginUserDto = " + loginUserDto);
+
         User user = userService.login(loginUserDto);
         String checkEmail = user.getEmail();
         UserRoleEnum role = user.getRole();

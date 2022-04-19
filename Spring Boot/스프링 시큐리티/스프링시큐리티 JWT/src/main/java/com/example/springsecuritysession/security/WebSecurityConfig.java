@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+//    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public BCryptPasswordEncoder encoderPassword() {
@@ -43,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //URL 인증여부 설정.
         http.authorizeRequests()
-                .antMatchers( "/user/signup", "/", "/user/login", "/css/**").permitAll()
+                .antMatchers( "/user/signup", "/", "/user/login", "/css/**", "/exception/**").permitAll()
                 .anyRequest().authenticated();
 
 
