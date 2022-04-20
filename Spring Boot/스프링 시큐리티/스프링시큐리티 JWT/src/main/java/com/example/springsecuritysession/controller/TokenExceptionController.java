@@ -11,4 +11,9 @@ public class TokenExceptionController {
     public void entryPoint() {
         throw new CustomException(ErrorCode.NO_LOGIN);
     }
+
+    @GetMapping("/exception/access")
+    public void denied() {
+        throw new CustomException(ErrorCode.NO_ADMIN);
+    }
 }

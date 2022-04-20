@@ -33,7 +33,7 @@ public class UserService {
         // 회원 ID 중복 확인
         Optional<User> found = userRepository.findByEmail(email);
         if (found.isPresent()) {
-            throw new CustomException(ErrorCode.SAME_USER);
+            throw new CustomException(ErrorCode.SAME_EMAIL);
         }
 
         String nickname = userDto.getNickname();

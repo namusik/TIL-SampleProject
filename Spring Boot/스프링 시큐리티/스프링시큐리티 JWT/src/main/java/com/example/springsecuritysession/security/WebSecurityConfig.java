@@ -1,6 +1,6 @@
 package com.example.springsecuritysession.security;
 
-import com.example.springsecuritysession.exception.CustomAuthenticationEntryPoint;
+import com.example.springsecuritysession.exception.*;
 import com.example.springsecuritysession.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
-//    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public BCryptPasswordEncoder encoderPassword() {
@@ -44,18 +43,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //URL 인증여부 설정.
         http.authorizeRequests()
-                .antMatchers( "/user/signup", "/", "/user/login", "/css/**", "/exception/**").permitAll()
+                .antMatchers( "/user/signup", "/", "/user/login", "/css/**", "/exception/**", "/favicon.ico").permitAll()
                 .anyRequest().authenticated();
 
-
-        //비인가자 요청시 보낼 Api URI
-        http.exceptionHandling().accessDeniedPage("/forbidden");
 
         //JwtFilter 추가
         http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
-        //exception handling
+        //JwtAuthentication exception handling
         http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
+        //access Denial handler
+        http.exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler());
 
     }
 }

@@ -83,9 +83,9 @@ public class UserController {
         Authentication authentication = securityContext.getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        return httpSession.getId();
+//        return httpSession.getId();
 
-//        return userDetails.getUsername();
+        return userDetails.getUsername();
     }
 }
 

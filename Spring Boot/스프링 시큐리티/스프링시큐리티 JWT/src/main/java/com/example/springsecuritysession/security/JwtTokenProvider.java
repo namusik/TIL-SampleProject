@@ -59,7 +59,7 @@ public class JwtTokenProvider {
 
     //JWT 토큰에서 인증정보 조회
     public Authentication getAuthentication(String token) {
-        System.out.println("token = " + token);
+//        System.out.println("token = " + token);
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -79,12 +79,8 @@ public class JwtTokenProvider {
         try {
             Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken).getBody();
 
-            return true;
-        } catch (ExpiredJwtException e) {
-            log.error("Token Expired");
-            return false;
-        } catch (JwtException e) {
-            log.error("Token Error");
+            return !claims.getExpiration().before(new Date());
+        } catch (Exception e) {
             return false;
         }
     }
