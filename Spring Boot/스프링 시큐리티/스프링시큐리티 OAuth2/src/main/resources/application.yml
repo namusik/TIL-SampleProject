@@ -1,0 +1,27 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:springminiprojectdb
+    username: sa
+    password:
+
+#goole Oauth
+  security:
+    oauth2:
+      client:
+        registration:
+          goole:
+            clientId:
+            clientSecret:
+            scope:
+              - email
+              - profile
+
+#token secret key
+jwt:
+  toke:
+    key: abcdefghijklm
+
+
