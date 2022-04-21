@@ -8,19 +8,14 @@ import com.sample.oauth2.security.JwtTokenProvider;
 import com.sample.oauth2.security.UserDetailsImpl;
 import com.sample.oauth2.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
@@ -75,18 +70,5 @@ public class UserController {
         response.setHeader("JWT", token);
 
         return token;
-    }
-
-    //시큐리티홀더에 저장된 로그인 유저 정보 꺼내보기
-    @GetMapping("/holder")
-    @ResponseBody
-    public String holder(HttpSession httpSession) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-//        return httpSession.getId();
-
-        return userDetails.getUsername();
     }
 }

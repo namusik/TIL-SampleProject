@@ -41,8 +41,10 @@
 
         <button id="login-id-submit">로그인</button>
     </form>
-    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+
     <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">닉네임 또는 패스워드를 확인해주세요</div>
+
+    <button onclick="location.href='/oauth2/authorization/google'" >Google Login</button>
 </div>
 </body>
 <script>

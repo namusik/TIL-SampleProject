@@ -12,8 +12,8 @@ spring:
     oauth2:
       client:
         registration:
-          goole:
-            clientId:
+          google:
+            clientId: 
             clientSecret:
             scope:
               - email
@@ -21,7 +21,7 @@ spring:
 
 #token secret key
 jwt:
-  toke:
+  token:
     key: abcdefghijklm
 
 

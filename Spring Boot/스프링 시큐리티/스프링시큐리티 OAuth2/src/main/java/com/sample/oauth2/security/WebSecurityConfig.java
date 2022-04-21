@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder encoderPassword() {
@@ -44,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //URL 인증여부 설정.
         http.authorizeRequests()
-                .antMatchers( "/user/signup", "/", "/user/login", "/css/**", "/exception/**", "/favicon.ico").permitAll()
+                .antMatchers( "/user/signup", "/", "/user/login", "/api/users/login/google", "/css/**", "/exception/**", "/favicon.ico", "/login/oauth2/code/google").permitAll()
                 .anyRequest().authenticated();
 
         //JwtFilter 추가
@@ -58,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //Oauth2 설정
         http.oauth2Login().userInfoEndpoint().userService(new OAuth2UserServiceImpl());
-        http.oauth2Login().successHandler(new OAuth2SuccessHandler());
+        http.oauth2Login().successHandler(oAuth2SuccessHandler);
 
     }
 }
