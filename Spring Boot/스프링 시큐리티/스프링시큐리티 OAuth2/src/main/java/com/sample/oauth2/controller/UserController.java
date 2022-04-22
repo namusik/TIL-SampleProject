@@ -11,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -58,6 +56,7 @@ public class UserController {
         return "login";
     }
 
+    //JWT 로그인 처리
     @PostMapping("/user/login")
     @ResponseBody
     public String login(LoginUserDto loginUserDto, HttpServletResponse response) {
@@ -70,5 +69,15 @@ public class UserController {
         response.setHeader("JWT", token);
 
         return token;
+    }
+
+    //OAuth로 로그인 시 비밀번호 입력 창으로
+    @GetMapping("/user/oauth/password/{email}/{nickname}")
+    public String oauth(@PathVariable("email") String email, @PathVariable("nickname") String nickname, Model model) {
+        System.out.println("email = " + email);
+        System.out.println("nickname = " + nickname);
+        model.addAttribute("email", email);
+        model.addAttribute("nickname", nickname);
+        return "oauthPassword";
     }
 }

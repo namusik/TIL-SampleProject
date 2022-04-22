@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //URL 인증여부 설정.
         http.authorizeRequests()
-                .antMatchers( "/user/signup", "/", "/user/login", "/api/users/login/google", "/css/**", "/exception/**", "/favicon.ico", "/login/oauth2/code/google").permitAll()
+                .antMatchers( "/user/signup", "/", "/user/login", "/css/**", "/exception/**", "/favicon.ico", "/login/oauth2/code/google", "/user/oauth/password/**").permitAll()
                 .anyRequest().authenticated();
 
         //JwtFilter 추가

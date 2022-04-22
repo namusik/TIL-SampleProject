@@ -31,24 +31,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         System.out.println("oAuth2User = " + oAuth2User);
 
-        //최초 로그인이면 회원가입 처리.
         String email = (String) oAuth2User.getAttributes().get("email");
         String nickname = (String) oAuth2User.getAttributes().get("name");
-        String password = UUID.randomUUID().toString();
-        UserRoleEnum role = UserRoleEnum.ROLE_MEMBER;
 
-        User user = userRepository.findByEmail(email)
-                .orElse(null);
-
-        if (user == null) {
-            user = new User(email, nickname, password, role);
-            System.out.println("user = " + user);
-            userRepository.save(user);
-        }
-
-        //강제 로그인 과정 실행
-        String token = jwtTokenProvider.createToken(email, role);
-        response.setHeader("JWT", token);
+        //패스워드 입력하도록 리다이렉트
+        response.sendRedirect("/user/oauth/password/"+email+"/"+nickname);
     }
 
 }
