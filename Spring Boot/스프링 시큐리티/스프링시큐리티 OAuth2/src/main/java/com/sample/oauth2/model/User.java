@@ -2,7 +2,6 @@ package com.sample.oauth2.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
