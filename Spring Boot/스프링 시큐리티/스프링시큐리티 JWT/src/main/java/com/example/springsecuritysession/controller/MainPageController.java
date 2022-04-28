@@ -1,6 +1,5 @@
 package com.example.springsecuritysession.controller;
 
-import com.example.springsecuritysession.dto.UserDto;
 import com.example.springsecuritysession.model.User;
 import com.example.springsecuritysession.security.UserDetailsImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

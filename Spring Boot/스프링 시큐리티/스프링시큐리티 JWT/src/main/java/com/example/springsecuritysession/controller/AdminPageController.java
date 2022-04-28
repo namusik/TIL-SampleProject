@@ -11,7 +11,7 @@ public class AdminPageController {
 
     @GetMapping("/api/admin")
     @Secured("ROLE_ADMIN")
-    public String adminPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String adminPage() {
         return "admin";
     }
 }

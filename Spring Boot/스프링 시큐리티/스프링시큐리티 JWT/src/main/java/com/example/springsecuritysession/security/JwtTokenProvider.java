@@ -1,6 +1,5 @@
 package com.example.springsecuritysession.security;
 
-import com.example.springsecuritysession.exception.CustomException;
 import com.example.springsecuritysession.model.UserRoleEnum;
 import com.example.springsecuritysession.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
@@ -11,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
@@ -35,6 +33,7 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
+
     //JWT 토큰 생성
     public String createToken(String email, UserRoleEnum role) {
 
@@ -57,20 +56,9 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    //JWT 토큰에서 인증정보 조회
-    public Authentication getAuthentication(String token) {
-//        System.out.println("token = " + token);
-        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    // 토큰에서 회원 정보 추출
-    public String getUserPk(String token) {
-        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
-    }
-
     // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
+
         return request.getHeader("JWT");
     }
 
@@ -83,5 +71,16 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    //JWT 토큰에서 인증정보 조회
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(this.getUserPk(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    // 토큰에서 회원 정보 추출
+    public String getUserPk(String token) {
+        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
     }
 }

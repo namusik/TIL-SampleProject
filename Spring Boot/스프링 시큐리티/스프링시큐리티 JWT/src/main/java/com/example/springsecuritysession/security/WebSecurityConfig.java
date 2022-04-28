@@ -1,7 +1,6 @@
 package com.example.springsecuritysession.security;
 
 import com.example.springsecuritysession.exception.*;
-import com.example.springsecuritysession.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
