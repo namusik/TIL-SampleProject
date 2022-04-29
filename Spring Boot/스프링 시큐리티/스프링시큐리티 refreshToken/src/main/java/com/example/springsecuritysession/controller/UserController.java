@@ -6,6 +6,7 @@ import com.example.springsecuritysession.model.User;
 import com.example.springsecuritysession.model.UserRoleEnum;
 import com.example.springsecuritysession.security.JwtTokenProvider;
 import com.example.springsecuritysession.security.UserDetailsImpl;
+import com.example.springsecuritysession.service.RedisService;
 import com.example.springsecuritysession.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +21,7 @@ public class UserController {
 
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RedisService redisService;
 
     //회원가입 페이지 이동
     @GetMapping("/user/signup")
@@ -60,14 +62,27 @@ public class UserController {
     public String login(LoginUserDto loginUserDto, HttpServletResponse response) {
 
         User user = userService.login(loginUserDto);
-        String checkEmail = user.getEmail();
+        String email = user.getEmail();
         UserRoleEnum role = user.getRole();
 
-        String token = jwtTokenProvider.createToken(checkEmail, role);
-        response.setHeader("JWT", token);
+        //토큰 생성
+        String token = jwtTokenProvider.createToken(email, role);
+        String refreshToken = jwtTokenProvider.createRefreshToken(email, role);
 
-        return token;
+        //refreshToken을 Redis에 저장해주기
+        redisService.setRedisStringValue(email, refreshToken);
+
+        response.setHeader("JWT", token);
+        response.setHeader("REFRESH", refreshToken);
+
+        return token + "       /////       " + refreshToken;
     }
+
+//    @PostMapping("/user/logout")
+//    @ResponseBody
+//    public String logout() {
+//        //redis에 저장되어있는 refreshToken 삭제
+//    }
 }
 
 

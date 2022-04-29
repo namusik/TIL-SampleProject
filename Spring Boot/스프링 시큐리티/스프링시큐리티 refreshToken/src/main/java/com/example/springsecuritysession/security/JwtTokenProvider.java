@@ -1,6 +1,7 @@
 package com.example.springsecuritysession.security;
 
 import com.example.springsecuritysession.model.UserRoleEnum;
+import com.example.springsecuritysession.service.RedisService;
 import com.example.springsecuritysession.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,14 @@ import java.util.Date;
 @Slf4j
 public class JwtTokenProvider {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final RedisService redisService;
 
     @Value("${jwt.token.key}")
     private String secretKey;
 
     //토큰 유효시간 설정
-    private Long tokenValidTime = 240 * 60 * 1000L;
+    private Long tokenValidTime = 2 * 60 * 1000L; //2분
+    private Long refreshTokenValidTime = 3 * 60 * 10000L; //3분
 
     //secretkey를 미리 인코딩 해줌.
     @PostConstruct
@@ -34,10 +37,20 @@ public class JwtTokenProvider {
     }
 
 
-    //JWT 토큰 생성
+    //accessToken 생성
     public String createToken(String email, UserRoleEnum role) {
 
-        //payload 설정
+        return createClaims(tokenValidTime, email, role);
+    }
+
+    //refreshToken 생성
+    public String createRefreshToken(String email, UserRoleEnum role) {
+
+        return createClaims(refreshTokenValidTime, email, role);
+    }
+
+    //token 생성 공통부분
+    private String createClaims(Long tokenValidTime, String email, UserRoleEnum role) {
         //registered claims
         Date now = new Date();
         Claims claims = Jwts.claims()
@@ -56,17 +69,23 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
+    // Request의 Header에서 token 값을 가져옵니다.
     public String resolveToken(HttpServletRequest request) {
 
         return request.getHeader("JWT");
     }
 
+    // Request의 Header에서 refreshtoken 값을 가져옵니다.
+    public String resolveRefreshToken(HttpServletRequest request) {
+
+        return request.getHeader("REFRESH");
+    }
+
+
     // 토큰의 유효성 + 만료일자 확인  // -> 토큰이 expire되지 않았는지 True/False로 반환해줌.
     public boolean validateToken(String jwtToken) {
         try {
             Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken).getBody();
-
             return !claims.getExpiration().before(new Date());
         } catch (Exception e) {
             return false;
@@ -82,5 +101,22 @@ public class JwtTokenProvider {
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
         return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
+    }
+
+    public UserRoleEnum getUserRole(String token) {
+        return (UserRoleEnum) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("role");
+    }
+
+    public boolean existRefreshToken(String refreshToken) {
+        //refreshToken에서 이메일 추출
+        String key = getUserPk(refreshToken);
+        //이메일을 가지고 redis에서 저장된 값 검색.
+        String tokenInRedis = redisService.getRedisStringValue(key);
+        //redis에 저장된 값과 헤더에 있던 refreshToken이 일치하면 true 반환.
+        if (refreshToken.equals(tokenInRedis)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
