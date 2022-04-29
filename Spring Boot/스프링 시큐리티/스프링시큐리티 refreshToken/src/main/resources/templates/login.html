@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>로그인 페이지</title>
+    <script>
+
+        $(document).ready(function () {
+            /*<![CDATA[*/
+            var user = "[[${user}]]";
+            /*]]>*/
+            console.log(user);
+            if(user !== ""){
+                alert("이미 로그인이 되어있습니다");
+                window.location.href = "/";
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="login-form">
+    <div id="login-title">Log into Select Shop</div>
+    <button id="login-id-btn" onclick="location.href='/user/signup'">
+        회원 가입하기
+    </button>
+    <form action="/user/login" method="post">
+        <div class="login-id-label">아이디</div>
+        <input type="text" name="email" class="login-input-box">
+
+        <div class="login-id-label">비밀번호</div>
+        <input type="password" name="password" class="login-input-box">
+
+        <button id="login-id-submit">로그인</button>
+    </form>
+    <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">닉네임 또는 패스워드를 확인해주세요</div>
+</div>
+</body>
+<script>
+    const href = location.href;
+    const queryString = href.substring(href.indexOf("?")+1)
+    if (queryString === 'error') {
+        const errorDiv = document.getElementById('login-failed');
+        errorDiv.style.display = 'block';
+    }
+</script>
+</html>
