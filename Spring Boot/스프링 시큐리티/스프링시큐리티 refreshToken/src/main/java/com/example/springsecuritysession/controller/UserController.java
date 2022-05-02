@@ -13,6 +13,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -76,6 +78,15 @@ public class UserController {
         response.setHeader("REFRESH", refreshToken);
 
         return token + "       /////       " + refreshToken;
+    }
+
+    @PostMapping("/user/reissue")
+    @ResponseBody
+    public String reissue(HttpServletResponse response, HttpServletRequest request, @RequestHeader("REFRESH") String refreshToken) {
+        String newAccessToken = jwtTokenProvider.reissueAccessToken(refreshToken, request);
+
+        response.setHeader("JWT", newAccessToken);
+        return newAccessToken;
     }
 
 //    @PostMapping("/user/logout")

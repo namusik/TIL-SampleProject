@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //URL 인증여부 설정.
         http.authorizeRequests()
-                .antMatchers( "/user/signup", "/", "/user/login", "/css/**", "/exception/**", "/favicon.ico").permitAll()
+                .antMatchers( "/user/signup", "/", "/user/login", "/user/reissue", "/css/**", "/exception/**", "/favicon.ico").permitAll()
                 .anyRequest().authenticated();
 
 

@@ -1,5 +1,9 @@
 package com.example.springsecuritysession.security;
 
+import com.example.springsecuritysession.exception.CustomException;
+import com.example.springsecuritysession.exception.ErrorCode;
+import com.example.springsecuritysession.exception.TokenExpiredException;
+import com.example.springsecuritysession.model.User;
 import com.example.springsecuritysession.model.UserRoleEnum;
 import com.example.springsecuritysession.service.RedisService;
 import com.example.springsecuritysession.service.UserDetailsServiceImpl;
@@ -27,8 +31,8 @@ public class JwtTokenProvider {
     private String secretKey;
 
     //토큰 유효시간 설정
-    private Long tokenValidTime = 2 * 60 * 1000L; //2분
-    private Long refreshTokenValidTime = 3 * 60 * 10000L; //3분
+    private Long tokenValidTime = 60 * 1000L; //1분
+    private Long refreshTokenValidTime = 2 * 60 * 10000L; //2분
 
     //secretkey를 미리 인코딩 해줌.
     @PostConstruct
@@ -83,11 +87,16 @@ public class JwtTokenProvider {
 
 
     // 토큰의 유효성 + 만료일자 확인  // -> 토큰이 expire되지 않았는지 True/False로 반환해줌.
-    public boolean validateToken(String jwtToken) {
+    public boolean validateToken(String jwtToken, HttpServletRequest request) {
         try {
             Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken).getBody();
             return !claims.getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+            e.printStackTrace();
+            request.setAttribute("exception", ErrorCode.TOKEN_EXPIRED);
+            return false;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -104,7 +113,8 @@ public class JwtTokenProvider {
     }
 
     public UserRoleEnum getUserRole(String token) {
-        return (UserRoleEnum) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("role");
+        String enumName = (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("role");
+        return Enum.valueOf(UserRoleEnum.class, enumName);
     }
 
     public boolean existRefreshToken(String refreshToken) {
@@ -117,6 +127,22 @@ public class JwtTokenProvider {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public String reissueAccessToken(String refreshToken, HttpServletRequest request) {//access Token 유효기간 끝났다면
+            //refreshToken 검증
+            boolean validateRefreshToken = this.validateToken(refreshToken, request);
+            //refreshToken Redis에서 이메일과 실제 일치하는지 검증.
+            boolean isExistRefreshToken = this.existRefreshToken(refreshToken);
+        if (validateRefreshToken && isExistRefreshToken) {
+            String email = this.getUserPk(refreshToken);
+            UserRoleEnum userRole = this.getUserRole(refreshToken);
+            String newAccessToken = this.createToken(email, userRole);
+            return newAccessToken;
+        } else {
+            //refreshToken 유효검증 실패했을 때. 다시 로그인하라고 해야됨.
+            throw new CustomException(ErrorCode.NO_LOGIN);
         }
     }
 }
