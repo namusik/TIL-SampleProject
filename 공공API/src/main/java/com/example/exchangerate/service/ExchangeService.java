@@ -21,7 +21,7 @@ public class ExchangeService {
 
     public void getRate() {
         // 인증키 (개인이 받아와야함)
-        String key = "8Sqtmy1PUqdAdk8yAG2mrxHYzoyry8N5";
+        String key = "";
 
         // 파싱한 데이터를 저장할 변수
         String data = "";
@@ -40,23 +40,39 @@ public class ExchangeService {
             JSONParser jsonParser = new JSONParser();
             JSONArray jsonArray = (JSONArray) jsonParser.parse(data);
 
-            GsonBuilder builder = new GsonBuilder();
-            builder.setPrettyPrinting();
-            Gson gson = builder.create();
+//            GsonBuilder builder = new GsonBuilder();
+//            builder.setPrettyPrinting();
+//            Gson gson = builder.create();
 
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject rateObject = (JSONObject) jsonArray.get(i);
 
-                Exchange exchange = gson.fromJson(rateObject.toString(), Exchange.class);
+                String result = rateObject.get("result").toString();
+                String curUnit = rateObject.get("cur_unit").toString();
+                String ttb = rateObject.get("ttb").toString();
+                String tts = rateObject.get("tts").toString();
+                String dealBasR = rateObject.get("deal_bas_r").toString();
+                String bkpr = rateObject.get("bkpr").toString();
+                String yyEfeeR = rateObject.get("yy_efee_r").toString();
+                String tenDdEfeeR = rateObject.get("ten_dd_efee_r").toString();
+                String kftcBkpr = rateObject.get("kftc_bkpr").toString();
+                String kftcDealBasR = rateObject.get("kftc_deal_bas_r").toString();
+                String curNm = rateObject.get("cur_nm").toString();
 
-                System.out.println("exchange = " + exchange);
+                Exchange exchange = new Exchange(result, curUnit, ttb, tts, dealBasR, bkpr, yyEfeeR, tenDdEfeeR, kftcBkpr, kftcDealBasR, curNm);
+//                Exchange exchange = gson.fromJson(rateObject.toString(), Exchange.class);
 
                 exchangeRepository.save(exchange);
-
             }
-
         }catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Double calculate(Double cur, String unit) {
+        Exchange exchange = exchangeRepository.findByCurUnit(unit).orElse(null);
+
+        return exchange.calculate(cur);
+
     }
 }

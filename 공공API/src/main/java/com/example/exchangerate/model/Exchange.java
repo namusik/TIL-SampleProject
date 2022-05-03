@@ -15,37 +15,42 @@ public class Exchange {
 
     String result;
 
-    String cur_unit;
+    String curUnit;
 
     String ttb;
 
     String tts;
 
-    String deal_bas_r;
+    String dealBasR;
 
     String bkpr;
 
-    String yy_efee_r;
+    String yyEfeeR;
 
-    String ten_dd_efee_r;
+    String tenDdEfeeR;
 
-    String kftc_bkpr;
+    String kftcBkpr;
 
-    String kftc_deal_bas_r;
+    String kftcDealBasR;
 
-    String cur_nm;
+    String curNm;
 
-    public Exchange(String result, String cur_unit, String ttb, String tts, String deal_bas_r, String bkpr, String yy_efee_r, String ten_dd_efee_r, String kftc_bkpr, String kftc_deal_bas_r, String cur_nm) {
+    public Exchange(String result, String curUnit, String ttb, String tts, String dealBasR, String bkpr, String yyEfeeR, String tenDdEfeeR, String kftcBkpr, String kftcDealBasR, String curNm) {
         this.result = result;
-        this.cur_unit = cur_unit;
+        this.curUnit = curUnit;
         this.ttb = ttb;
         this.tts = tts;
-        this.deal_bas_r = deal_bas_r;
+        this.dealBasR = dealBasR;
         this.bkpr = bkpr;
-        this.yy_efee_r = yy_efee_r;
-        this.ten_dd_efee_r = ten_dd_efee_r;
-        this.kftc_bkpr = kftc_bkpr;
-        this.kftc_deal_bas_r = kftc_deal_bas_r;
-        this.cur_nm = cur_nm;
+        this.yyEfeeR = yyEfeeR;
+        this.tenDdEfeeR = tenDdEfeeR;
+        this.kftcBkpr = kftcBkpr;
+        this.kftcDealBasR = kftcDealBasR;
+        this.curNm = curNm;
+    }
+
+    public Double calculate(Double cur) {
+
+        return cur * Double.parseDouble(this.bkpr.replace(",", ""));
     }
 }
