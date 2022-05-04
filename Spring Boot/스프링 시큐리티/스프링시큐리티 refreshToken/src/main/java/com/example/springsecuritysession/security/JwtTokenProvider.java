@@ -2,8 +2,6 @@ package com.example.springsecuritysession.security;
 
 import com.example.springsecuritysession.exception.CustomException;
 import com.example.springsecuritysession.exception.ErrorCode;
-import com.example.springsecuritysession.exception.TokenExpiredException;
-import com.example.springsecuritysession.model.User;
 import com.example.springsecuritysession.model.UserRoleEnum;
 import com.example.springsecuritysession.service.RedisService;
 import com.example.springsecuritysession.service.UserDetailsServiceImpl;
