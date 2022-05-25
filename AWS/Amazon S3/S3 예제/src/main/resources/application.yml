@@ -1,0 +1,17 @@
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    s3:
+      bucket: woosik-bucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
