@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>S3 object</title>
+</head>
+<body>
+<div class="container">
+    <h1 style="text-align: center; margin-top: 10px" th:text="'Welcome to ' + ${message} + '?'"></h1>
+    <h3>Simple S3 File Viewer </h3>
+    <p>These are the available files inside your S3 Bucket: <strong>[[${bucketName}]]</strong></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"><i class="fas fa-file"></i></th>
+            <th scope="col">Name</th>
+            <th scope="col">Size</th>
+            <th scope="col">Last modified</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tr th:each="file, iteration : ${availableFiles}">
+            <td scope="row">[[${iteration.count}]]</td>
+            <td>[[${file.key}]]</td>
+            <td>[[${file.size}]] Bytes</td>
+            <td>[[${#dates.format(file.lastModified, 'd. MMM. yyyy HH:mm:ss Z')}]]</td>
+            <td>
+                <a download target="_blank" th:href="${bucketLocation} + '/' + ${file.key}">
+                    <i class="fas fa-download"></i> Download
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
