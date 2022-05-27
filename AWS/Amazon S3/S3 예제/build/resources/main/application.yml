@@ -1,8 +1,8 @@
 cloud:
   aws:
     credentials:
-      access-key:
-      secret-key: 
+      access-key: AKIAVR72H4IJHAHKPFNQ
+      secret-key: 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
     s3:
       bucket: woosik-bucket
     region:

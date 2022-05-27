@@ -1,19 +1,15 @@
 package com.example.s3test.service;
 
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -26,23 +22,45 @@ public class S3Service {
     public String uploadFile(MultipartFile multipartFile) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
 
-        amazonS3.putObject(new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), null));
+        //파일 형식 구하기
+        String ext = fileName.split("\\.")[1];
+        String contentType = "";
+
+        switch (ext) {
+            case "jpeg":
+                contentType = "image/jpeg";
+                break;
+            case "png":
+                contentType = "image/png";
+                break;
+            case "txt":
+                contentType = "text/plain";
+                break;
+            case "csv":
+                contentType = "text/csv";
+                break;
+        }
+
+        try {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentType(contentType);
+
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), metadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (AmazonServiceException e) {
+            e.printStackTrace();
+        } catch (SdkClientException e) {
+            e.printStackTrace();
+        }
+
+        ListObjectsV2Result listObjectsV2Result = amazonS3.listObjectsV2(bucket);
+        List<S3ObjectSummary> objectSummaries = listObjectsV2Result.getObjectSummaries();
+
+        for (S3ObjectSummary object: objectSummaries) {
+            System.out.println("object = " + object.toString());
+        }
 
         return amazonS3.getUrl(bucket, fileName).toString();
-    }
 
-    private String creteFileName(String originalFilename) {
-        //파일명 난수화 하기.
-        return UUID.randomUUID().toString().concat(getFileExtension(originalFilename));
-    }
-
-    private String getFileExtension(String originalFilename) {
-        //file 형식이 잘못된 경우. 파일 타입과 상관없이 업로하기위해 .존재 유무만 확인.
-        try {
-            return originalFilename.substring(originalFilename.lastIndexOf("."));
-        } catch (StringIndexOutOfBoundsException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 파일형식ㄱ");
-
-        }
     }
 }
