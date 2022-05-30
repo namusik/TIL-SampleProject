@@ -3,18 +3,19 @@ cloud:
     credentials:
       access-key:
       secret-key:
-    s3:
+    s3: #????
       bucket: woosik-bucket
-    region:
+    region: #S3 ??
       static: ap-northeast-2
     stack:
       auto: false
-
+# multipartFile ?? ???? ??
 spring:
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+#  h2 ??
   h2:
     console:
       enabled: true

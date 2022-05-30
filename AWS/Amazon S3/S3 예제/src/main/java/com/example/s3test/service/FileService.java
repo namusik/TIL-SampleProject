@@ -5,7 +5,6 @@ import com.example.s3test.model.FileEntity;
 import com.example.s3test.repository.FileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -20,9 +19,6 @@ public class FileService {
 
     public List<FileEntity> getFiles() {
         List<FileEntity> all = fileRepository.findAll();
-        for (FileEntity file: all) {
-            System.out.println("file = " + file.toString());
-        }
         return all;
     }
 }
