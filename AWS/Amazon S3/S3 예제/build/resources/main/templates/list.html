@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>S3 object</title>
@@ -7,26 +7,20 @@
 <body>
 <div class="container">
     <h3>Simple S3 File Viewer </h3>
-    <p>These are the available files inside your S3 Bucket: <strong>[[${bucketName}]]</strong></p>
     <table class="table">
         <thead>
         <tr>
             <th scope="col"><i class="fas fa-file"></i></th>
-            <th scope="col">Name</th>
-            <th scope="col">Size</th>
-            <th scope="col">Last modified</th>
+            <th scope="col">id</th>
+            <th scope="col">Title</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
-        <tr th:each="file  : ${fileList}">
-            <td scope="row">[[${iteration.count}]]</td>
-            <td>[[${file.key}]]</td>
-            <td>[[${file.size}]] Bytes</td>
-            <td>[[${#dates.format(file.lastModified, 'd. MMM. yyyy HH:mm:ss Z')}]]</td>
+        <tr th:each="file:${fileList}">
+            <td th:text="${file.id}"></td>
+            <td th:text="${file.title}"></td>
             <td>
-                <a download target="_blank" th:href="${bucketLocation} + '/' + ${file.key}">
-                    <i class="fas fa-download"></i> Download
-                </a>
+                <img id="image" th:src="${file.s3Url}">
             </td>
         </tr>
     </table>

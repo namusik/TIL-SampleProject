@@ -1,10 +1,11 @@
 package com.example.s3test.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class FileEntity {
 
@@ -21,5 +22,14 @@ public class FileEntity {
     public FileEntity(String title, String s3Url) {
         this.title = title;
         this.s3Url = s3Url;
+    }
+
+    @Override
+    public String toString() {
+        return "FileEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", s3Url='" + s3Url + '\'' +
+                '}';
     }
 }

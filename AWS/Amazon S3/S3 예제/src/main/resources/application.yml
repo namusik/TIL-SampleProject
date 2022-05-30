@@ -2,7 +2,7 @@ cloud:
   aws:
     credentials:
       access-key:
-      secret-key: 
+      secret-key:
     s3:
       bucket: woosik-bucket
     region:
