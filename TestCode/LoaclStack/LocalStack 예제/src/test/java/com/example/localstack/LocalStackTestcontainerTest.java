@@ -43,6 +43,6 @@ public class LocalStackTestcontainerTest {
         S3Object object = amazonS3.getObject(bucketName, key);
         System.out.println("object.getKey() = " + object.getKey());
 
-        Asser
+
     }
 }

@@ -32,7 +32,6 @@ dependencies {
     //testcontainer
     testImplementation 'org.testcontainers:junit-jupiter'
     //localstack
-    implementation 'org.testcontainers:localstack'
     testImplementation 'org.testcontainers:localstack'
     //s3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
