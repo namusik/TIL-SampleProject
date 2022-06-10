@@ -30,6 +30,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-devtools'
 
+    //testcontainer
+    testImplementation 'org.testcontainers:junit-jupiter'
+    //localstack
+    testImplementation 'org.testcontainers:localstack'
+
 }
 
 tasks.named('test') {

@@ -29,10 +29,15 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-devtools'
     //testcontainer
     testImplementation 'org.testcontainers:junit-jupiter'
     //localstack
     testImplementation 'org.testcontainers:localstack'
+    //localstack for local run
+    implementation "org.testcontainers:localstack:1.16.3"
     //s3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }

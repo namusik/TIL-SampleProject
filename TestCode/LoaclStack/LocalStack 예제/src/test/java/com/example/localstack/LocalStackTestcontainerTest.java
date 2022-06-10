@@ -5,16 +5,13 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.org.apache.commons.io.IOUtils;
 import org.testcontainers.utility.DockerImageName;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
-
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.testcontainers.containers.localstack.LocalStackContainer.Service.S3;
@@ -55,7 +52,7 @@ public class LocalStackTestcontainerTest {
 
         assertAll(
                 () -> assertEquals(content, content2),
-                () -> assertEquals(key, content)
+                () -> assertEquals(key, key2)
         );
     }
 }

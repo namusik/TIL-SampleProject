@@ -1,21 +1,21 @@
 cloud:
   aws:
-    credentials:
-      access-key:
-      secret-key: 
-    s3: #버킷이름
-      bucket: woosik-bucket
-    region: #S3 지역
+    region:
       static: ap-northeast-2
+
+    s3:
+      bucket: woo
+
     stack:
       auto: false
+
 # multipartFile 용량 늘려주는 설정
 spring:
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-#  h2 설정
+  #  h2 설정
   h2:
     console:
       enabled: true

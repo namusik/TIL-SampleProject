@@ -2,7 +2,7 @@ cloud:
   aws:
     credentials:
       access-key:
-      secret-key:
+      secret-key: 
     s3: #버킷이름
       bucket: woosik-bucket
     region: #S3 지역
