@@ -19,6 +19,7 @@ public class S3Service {
     private final AmazonS3 amazonS3;
 
     public String uploadFile(MultipartFile multipartFile) throws IOException {
+        String folder = "";
         String fileName = multipartFile.getOriginalFilename();
 
         //파일 형식 구하기
@@ -29,23 +30,27 @@ public class S3Service {
         switch (ext) {
             case "jpeg":
                 contentType = "image/jpeg";
+                folder = "img/";
                 break;
             case "png":
                 contentType = "image/png";
+                folder = "img/";
                 break;
             case "txt":
                 contentType = "text/plain";
+                folder = "txt/";
                 break;
             case "csv":
                 contentType = "text/csv";
+                folder = "csv/";
                 break;
         }
 
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
-
-            amazonS3.putObject(new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), metadata)
+            System.out.println("folder = " + folder);
+            amazonS3.putObject(new PutObjectRequest(bucket, folder+fileName, multipartFile.getInputStream(), metadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (AmazonServiceException e) {
             e.printStackTrace();
@@ -61,5 +66,12 @@ public class S3Service {
             System.out.println("object = " + object.toString());
         }
         return amazonS3.getUrl(bucket, fileName).toString();
+    }
+
+    public List<String> allFolders() {
+        ListObjectsV2Request listObjectsV2Request = new ListObjectsV2Request().withBucketName(bucket);
+        String prefix = listObjectsV2Request.getDelimiter();
+        System.out.println(prefix);
+        return null;
     }
 }
