@@ -11,7 +11,7 @@ public class FCMController {
     private FCMService fcmService;
 
     @PostMapping("pushnoti")
-    public String puchNotification(String clientToken) {
+    public String pushNotification(String clientToken) {
 
         fcmService.sendPush(clientToken);
 

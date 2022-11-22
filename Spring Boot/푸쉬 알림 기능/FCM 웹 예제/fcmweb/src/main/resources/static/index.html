@@ -4,7 +4,59 @@
     <meta charset="UTF-8">
     <title>hello</title>
 </head>
+
 <body>
   hello
+
+  <div id="alarmZone">
+      <p>알람영역</p>
+
+  </div>
 </body>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+
+    firebase.initializeApp({
+        apiKey: "AIzaSyAQuC4dWSBUz4F1tnVn8MmvfrTbKnbcMWg",
+        authDomain: "fcmtest-8ea73.firebaseapp.com",
+        projectId: "fcmtest-8ea73",
+        storageBucket: "fcmtest-8ea73.appspot.com",
+        messagingSenderId: "327970754149",
+        appId: "1:327970754149:web:0330f48916620df3fe408c",
+        measurementId: "G-EGW7NBQKR8"
+    });
+
+    // Initialize Firebase Cloud Messaging and get a reference to the service
+    const messaging = firebase.messaging();
+
+    console.log('Requesting permission...');
+    messaging.requestPermission()
+        .then(function() {
+            console.log('Getting token')
+            return messaging.getToken();
+        })
+        .then(async function(token) {
+            console.log('web token :::', token);
+
+            messaging.onMessage(payload => {
+                console.log(payload);
+                const title = payload.notification.title;
+                const body = payload.notification.body;
+                console.log('title :::: ', title);
+                console.log('body ::::: ', body);
+
+                var html = '';
+                html += '<div class="notification" role="alert">';
+                html += '<p class="title">'+title+'</p>';
+                html += '<p class="body">'+body+'</p>';
+                html += '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                html += '<span aria-hidden="true">닫기</span>';
+                html += '</button>';
+                html += '</div>';
+                $("#alarmZone").append(html);
+            })
+        })
+</script>
 </html>
