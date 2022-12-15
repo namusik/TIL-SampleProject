@@ -1,19 +1,20 @@
 package com.example.fcmweb.fcm;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
 @RequiredArgsConstructor
+@Controller
 public class FCMController {
 
-    private FCMService fcmService;
+    private final FCMService fcmService;
 
-    @PostMapping("pushnoti")
-    public String pushNotification(String clientToken) {
-
-        fcmService.sendPush(clientToken);
+    @PostMapping("/fcm")
+    @ResponseBody
+    public String pushNotification(@RequestBody FCMForm fcmForm) {
+        System.out.println("fcmForm = " + fcmForm);
+        fcmService.sendPush(fcmForm);
 
         return "success";
     }

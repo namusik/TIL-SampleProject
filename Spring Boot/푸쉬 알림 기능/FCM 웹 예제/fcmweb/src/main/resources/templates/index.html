@@ -1,21 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>hello</title>
 </head>
 
 <body>
-  hello
+<script>
+    function fcm() {
+        let url = "/fcm";
+        let title = document.querySelector('#title').value;
+        console.log(title)
+        let body = document.querySelector('#body').value;
+        console.log(body)
+        let token = document.querySelector('#token').value;
+        console.log(token)
+
+        let data = {
+            'title' : title,
+            'body' : body,
+            'token' : token
+        };
+
+        fetch(url ,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+    }
+</script>
+<form>
+    <label for="title">알림 제목</label>
+    <input id="title" name="title" type="text" placeholder="알림제목을 입력하세요">
+    <label for="body">알림 내용</label>
+    <input id="body" name="body" type="text" placeholder="알림내용을 입력하세요">
+    <input id="token" name="token" type="hidden">
+    <button onclick="fcm()">전송</button>
+</form>
 
   <div id="alarmZone">
       <p>알람영역</p>
-
   </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 
     firebase.initializeApp({
@@ -39,6 +71,7 @@
         })
         .then(async function(token) {
             console.log('web token :::', token);
+            $("#token").val(token);
 
             messaging.onMessage(payload => {
                 console.log(payload);
