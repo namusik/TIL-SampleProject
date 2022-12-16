@@ -1,0 +1,5 @@
+#springdoc:
+#  swagger-ui:
+#    path: movie.html
+#    version: v1
+#  paths-to-match:
