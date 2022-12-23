@@ -17,7 +17,7 @@ public class OpenAPIConfig {
                 .info(new Info().title("movie API")
                         .description("영화 관련 API")
                         .version("1.0.0")
-                        .license(new License().name("namu"))
+                        .license(new License().name("라이센스 이름"))
                 );
     }
 
