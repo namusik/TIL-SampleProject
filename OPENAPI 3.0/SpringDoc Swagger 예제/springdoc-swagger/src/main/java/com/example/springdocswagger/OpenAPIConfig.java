@@ -27,6 +27,7 @@ public class OpenAPIConfig {
         return GroupedOpenApi.builder()
                 .group("v1 api 그룹")    //해당 그룹 이름
                 .pathsToMatch("/v1/**")  //URI 규칙
+                .displayName("v1입니다")
                 .build();
     }
 
