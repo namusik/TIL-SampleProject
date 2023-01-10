@@ -1,9 +1,8 @@
 package com.example.springdocswagger;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +29,7 @@ public class MovieController {
             @ApiResponse(responseCode = "200", description = "success"),
             @ApiResponse(responseCode = "302", description = "fail", content = @Content)
     })
-    public Movie findByTitle(@RequestParam String title) {
+    public Movie findByTitle(@Parameter(description = "찾고자 하는 영화의 제목") @RequestParam String title) {
         Movie movie = new Movie("헤어질 결심", "박찬욱", "대한민국", 2022);
         return movie;
     }
