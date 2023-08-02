@@ -1,5 +1,5 @@
 package org.example.finalEx;
-class FinalExTest {
+class FinalEx {
     public static void main(String[] args) {
         /**
          * 1. final class를 상속할 수 없다.

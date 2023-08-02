@@ -9,6 +9,7 @@ import lombok.ToString;
 @Getter
 public class Dog {
     private String name;
+    private int age;
 
     //1. 선언과 동시에 초기화
     static final int HEIGHT = 13;
