@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.List.ListExTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-08-16T16:19:04" hostname="LAPTOP-KC7HJPTO" time="0.025">
+  <properties/>
+  <testcase name="list()" classname="org.example.List.ListExTest" time="0.025"/>
+  <system-out><![CDATA[list1 = [aaa]
+list2 = []
+list3 = [bbb]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
