@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.testdoubles.OrderTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-08-17T07:49:02" hostname="cpe-172-90-11-185.socal.res.rr.com" time="0.034">
-  <properties/>
-  <testcase name="check()" classname="org.example.testdoubles.OrderTest" time="0.007"/>
-  <testcase name="order()" classname="org.example.testdoubles.OrderTest" time="0.027"/>
-  <system-out><![CDATA[aaa : bbb
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
