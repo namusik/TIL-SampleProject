@@ -1,17 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
 
+
 function Header(props){
   console.log('props', props, props.title);
   return <header>
-    <h1><a href="/" >{props.title}</a></h1>
+    <h1><a href="/" onClick={(event)=>{
+      event.preventDefault();
+      props.onChangeMode();
+    }} >{props.title}</a></h1>
   </header>
 }
 function Nav(props){
   const LIS = []
   for(let i=0; i<props.topics.length; i++){
     let t = props.topics[i];
-    LIS.push(<li key={t.id}><a href={'/read/'+t.id}>{t.title}</a></li>)
+    LIS.push(<li key={t.id}>
+        <a id={t.id} href={'/read/'+t.id} onClick={(event)=>{
+          event.preventDefault();
+          props.onChangeMode(event.target.id);
+        }}>{t.title}</a>
+      </li>)
   }
   return <nav>
     <ol>
@@ -26,7 +35,6 @@ function Article(props){
     {props.body}
   </article>
 }
-
 function App() {
   const TOPICS = [
     {id:1, title:'html', body:'html is ...'},
@@ -35,10 +43,12 @@ function App() {
   ]
   return (
     <div>
-      <Header title="REACT" onChangeMode={function(){
+      <Header title="REACT" onChangeMode={()=>{
         alert('Header');
       }}></Header>
-      <Nav topics={TOPICS}></Nav>
+      <Nav topics={TOPICS} onChangeMode={(id)=>{
+        alert(id);
+      }}></Nav>
       <Article title="Welcomee" body="Hello, WEBB"></Article>
     </div>  
   );
