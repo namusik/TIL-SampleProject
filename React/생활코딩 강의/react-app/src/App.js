@@ -19,7 +19,8 @@ function Nav(props){
     LIS.push(<li key={t.id}>
         <a id={t.id} href={'/read/'+t.id} onClick={(event)=>{
           event.preventDefault();
-          props.onChangeMode(event.target.id);
+          props.onChangeMode(Number(event.target.id));
+          //문자열을 숫자로 바꾸기 위해.
         }}>{t.title}</a>
       </li>)
   }
@@ -43,6 +44,7 @@ function App() {;
   // const setMode = _mode[1];
   const [mode, setMode] = useState('WELCOME');
   // console.log('_mode', _mode);
+  const [id, setId] = useState(null); //현재 값이 선택되지 않았으니까 초기값 null
   const TOPICS = [
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ....'},
@@ -52,15 +54,25 @@ function App() {;
   if(mode === 'WELCOME'){
     content = <Article title="Welcomee" body="Hello, WEB"></Article>
   }else if(mode === 'READ'){
-    content = <Article title="Read" body="Hello, Read"></Article>
+    let title, body = null; //값 미리 초기화
+    for(let i=0; i<TOPICS.length; i++){
+      console.log(TOPICS[i].id, id);
+      if(TOPICS[i].id === id){
+        title = TOPICS[i].title;
+        body = TOPICS[i].body;  
+      }
+    }
+    content = <Article title={title} body={body}></Article>
   }
   return (
     <div>
       <Header title="REACT" onChangeMode={()=>{
         setMode('WELCOME');
       }}></Header>
-      <Nav topics={TOPICS} onChangeMode={(id)=>{
+      <Nav topics={TOPICS} onChangeMode={(_id)=>{
+        // alert(id);
         setMode('READ');
+        setId(_id);
       }}></Nav>
       {content}
     </div>  
