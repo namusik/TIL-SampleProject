@@ -1,11 +1,1 @@
-,java.lang.ThreadGroup[name=main,maxpri=10]
-     Thread[Test worker,5,main]
-A    Thread[/127.0.0.1:14326 to /127.0.0.1:14325 workers,5,main]
-J    Thread[/127.0.0.1:14326 to /127.0.0.1:14325 workers Thread 2,5,main]
-J    Thread[/127.0.0.1:14326 to /127.0.0.1:14325 workers Thread 3,5,main]
-1    java.lang.ThreadGroup[name=Group1,maxpri=3]
-        Thread[th1,3,Group1]
-8        java.lang.ThreadGroup[name=SubGroup1,maxpri=3]
-%            Thread[th2,3,SubGroup1]
-2    java.lang.ThreadGroup[name=Group2,maxpri=10]
-        Thread[th3,5,Group2]
+	BLOCKED

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.stream.StreamFindTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-08-25T02:41:18" hostname="cpe-172-90-1-202.socal.res.rr.com" time="0.006">
-  <properties/>
-  <testcase name="findFirst()" classname="org.example.stream.StreamFindTest" time="0.006"/>
-  <system-out><![CDATA[i = 1
-]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
