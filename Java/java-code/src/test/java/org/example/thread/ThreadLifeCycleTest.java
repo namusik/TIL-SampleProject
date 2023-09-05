@@ -20,6 +20,8 @@ public class ThreadLifeCycleTest {
 
         t1.start();
         t2.start();
+        //t1이 먼저 commonResource()에 들어가기 때문에, 
+        //t2는 영원히 commonResource()에 들어가지 못한다
 
         Thread.sleep(1000);
 

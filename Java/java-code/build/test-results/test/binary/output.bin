@@ -1,1 +1,4 @@
-	BLOCKED
+thread.getState() = NEW
+thread.getState() = RUNNABLE
+thread start
+	BLOCKED
