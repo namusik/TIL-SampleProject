@@ -1,8 +1,6 @@
 package org.example.thread;
 
-
 import javax.swing.*;
-
 import static java.lang.Thread.currentThread;
 
 public class ThreadInterrupt {
@@ -14,8 +12,6 @@ public class ThreadInterrupt {
         var input = JOptionPane.showInputDialog("입력");
         thread.interrupt();
         System.out.println("thread.isInterrupted() = " + thread.isInterrupted());
-
-
     }
 
     static class RunnableImpl implements Runnable {
@@ -30,5 +26,4 @@ public class ThreadInterrupt {
             System.out.println("카운트 종료");
         }
     }
-
 }

@@ -5,14 +5,17 @@ public class WaitingState implements Runnable {
 
     public static void main(String[] args) {
         t1 = new Thread(new WaitingState());
+        t1.setName("thread1");
         t1.start();
     }
 
     @Override
     public void run() {
         System.out.println("WaitingState run");
+        System.out.println("Thread.currentThread().getName() = " + Thread.currentThread().getName());
 
         Thread t2 = new Thread(new DemoWaitingStateRunnable());
+        t2.setName("thread2");
         t2.start();
         System.out.println("t2.getState() = " + t2.getState());
 
