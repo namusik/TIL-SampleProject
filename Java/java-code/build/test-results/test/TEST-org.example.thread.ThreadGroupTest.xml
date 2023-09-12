@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.thread.ThreadGroupTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-09-12T15:56:08" hostname="LAPTOP-KC7HJPTO" time="0.002">
+  <properties/>
+  <testcase name="threadGroupTest()" classname="org.example.thread.ThreadGroupTest" time="0.002"/>
+  <system-out><![CDATA[java.lang.ThreadGroup[name=main,maxpri=10]
+    Thread[Test worker,5,main]
+    Thread[/127.0.0.1:14915 to /127.0.0.1:14914 workers,5,main]
+    Thread[/127.0.0.1:14915 to /127.0.0.1:14914 workers Thread 2,5,main]
+    Thread[/127.0.0.1:14915 to /127.0.0.1:14914 workers Thread 3,5,main]
+    java.lang.ThreadGroup[name=Group1,maxpri=3]
+        Thread[th1,3,Group1]
+        java.lang.ThreadGroup[name=SubGroup1,maxpri=3]
+            Thread[th2,3,SubGroup1]
+    java.lang.ThreadGroup[name=Group2,maxpri=10]
+        Thread[th3,5,Group2]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

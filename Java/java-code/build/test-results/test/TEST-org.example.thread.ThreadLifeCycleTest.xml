@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.thread.ThreadLifeCycleTest" tests="2" skipped="1" failures="0" errors="0" timestamp="2023-09-12T15:56:08" hostname="LAPTOP-KC7HJPTO" time="1.507">
+  <properties/>
+  <testcase name="lifeCycle()" classname="org.example.thread.ThreadLifeCycleTest" time="0.002"/>
+  <testcase name="blocked()" classname="org.example.thread.ThreadLifeCycleTest" time="1.505">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[thread.getState() = NEW
+thread.getState() = RUNNABLE
+thread start
+BLOCKED
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

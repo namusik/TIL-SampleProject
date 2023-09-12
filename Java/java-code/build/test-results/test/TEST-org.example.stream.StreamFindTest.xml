@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.stream.StreamFindTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-09-12T15:56:08" hostname="LAPTOP-KC7HJPTO" time="0.006">
+  <properties/>
+  <testcase name="findAnyList()" classname="org.example.stream.StreamFindTest" time="0.004"/>
+  <testcase name="findFirstList()" classname="org.example.stream.StreamFindTest" time="0.001"/>
+  <system-out><![CDATA[any = 1
+i = 1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
