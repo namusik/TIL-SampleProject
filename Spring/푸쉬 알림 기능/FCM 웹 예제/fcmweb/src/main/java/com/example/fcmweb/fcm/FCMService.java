@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 public class FCMService {
 
     public void sendPush(FCMForm fcmForm) {
-
-
         // See documentation on defining a message payload.
         Message message = Message.builder()
                 .setNotification(Notification.builder()
