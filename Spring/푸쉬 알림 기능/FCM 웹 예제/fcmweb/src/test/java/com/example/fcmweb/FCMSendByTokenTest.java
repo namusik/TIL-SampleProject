@@ -24,8 +24,10 @@ public class FCMSendByTokenTest {
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
 
+        //여러 앱 초기화를 위해 이름 옵션 추가
         FirebaseApp megabirdApp = FirebaseApp.initializeApp(options, "megabirdApp");
-        //static map에 intial된 fcmapp 등록
+
+        //static map에 firebaseApp put
         appMap.put("megabirdApp", megabirdApp);
     }
 
@@ -49,11 +51,13 @@ public class FCMSendByTokenTest {
         System.out.println("batchResponse.getSuccessCount() = " + batchResponse.getSuccessCount());
         System.out.println("batchResponse.getFailureCount() = " + batchResponse.getFailureCount());
 
+
         for (SendResponse sendResponse : batchResponse.getResponses()) {
             if (sendResponse.isSuccessful()) {
-                System.out.println("sendResponse = " + sendResponse);
+                System.out.println("sendResponse.getMessageId() = " + sendResponse.getMessageId());
             } else {
-                System.out.println("sendResponse.getException() = " + sendResponse.getException());
+                System.out.println("sendResponse.getMessageId() = " + sendResponse.getMessageId());
+                System.out.println("sendResponse.getException() = " + sendResponse.getException() + sendResponse.getException().getMessage());
             }
         }
     }
@@ -84,24 +88,139 @@ public class FCMSendByTokenTest {
         }
     }
 
+    /**
+     * 필요한 변수
+     * 1. 토큰 list
+     * 2. title
+     * 3. body
+     * 4. AppName
+     *
+     * @throws FirebaseMessagingException
+     */
     @Test
-    @DisplayName("FCM 여러 기기에 Data 전송")
-    void sendDataToMultiDevices() throws FirebaseMessagingException {
+    @DisplayName("FCM 여러 기기에 각각 다른 메시지 전송")
+    void sendDifferentMessageToMulitiDevices() throws FirebaseMessagingException {
+        //given
+        MessageDto messageDtoA = new MessageDto("제목A", "내용B", tokenA);
+        MessageDto messageDtoB = new MessageDto("제목B", "내용B", tokenB);
+        List<MessageDto> messageDtoList = Arrays.asList(messageDtoA, messageDtoB);
+
+        //when
+        List<Message> messageList = new ArrayList<>();
+        for (MessageDto messageDto : messageDtoList) {
+            messageList.add(createMessage(messageDto.getTitle(), messageDto.getBody(), messageDto.getToken()));
+        }
+
+        FirebaseApp firebaseApp = appMap.get("megabirdApp");
+        BatchResponse batchResponse = FirebaseMessaging.getInstance(firebaseApp).sendAll(messageList);
+
+        //then
+        System.out.println("batchResponse.getSuccessCount() = " + batchResponse.getSuccessCount());
+        System.out.println("batchResponse.getFailureCount() = " + batchResponse.getFailureCount());
+
+        for (SendResponse sendResponse : batchResponse.getResponses()) {
+            if (sendResponse.isSuccessful()) {
+                System.out.println("sendResponse.getMessageId() = " + sendResponse.getMessageId());
+            } else {
+                System.out.println("sendResponse.getException() = " + sendResponse.getException() + sendResponse.getException().getMessage());
+            }
+        }
+        // 전송 실패한 토큰 뽑아내기
+        if (batchResponse.getFailureCount() > 0) { //실패건수가 존재한다면
+            List<SendResponse> responseList = batchResponse.getResponses();
+
+            List<Map<String, Object>> failedTokens = new ArrayList<>();
+
+            for (int i = 0; i < responseList.size(); i++) { //responseList 반복문 돌려서
+                if (!responseList.get(i).isSuccessful()) {
+                    Map<String, Object> map = new HashMap<>();
+                    String deviceToken = messageDtoList.get(i).getToken(); //reponseList의 순서와 tokenList의 순서가 일치하게 응답이 돌아와서 가능한 방법
+                    FirebaseMessagingException exception = responseList.get(i).getException(); //실패이유
+                    map.put(deviceToken, exception);
+                    failedTokens.add(map);
+                }
+            }
+            System.out.println("failedTokens : " + failedTokens);
+        }
+    }
+    static class MessageDto{
+        String title;
+        String body;
+        String token;
+
+        public MessageDto(String title, String body, String token) {
+            this.title = title;
+            this.body = body;
+            this.token = token;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+    }
+
+    private Message createMessage(String title, String body, String token) {
+        Message messageA = Message.builder().setNotification(
+                    Notification.builder()
+                    .setTitle(title)
+                    .setBody(body)
+                    .build()
+                )
+                .setToken(token)
+                .build();
+        return messageA;
+    }
+
+    /**
+     * 필요한 변수
+     * 1. 토큰 list
+     * 2. title
+     * 3. body
+     * 4. AppName
+     *
+     * @throws FirebaseMessagingException
+     */
+    @Test
+    @DisplayName("FCM 여러 기기에 하나의 메시지 전송")
+    void sendSameMessageToMultiDevices() throws FirebaseMessagingException {
         List<String> tokenList = Arrays.asList(tokenA, tokenB);
 
-        MulticastMessage message = MulticastMessage.builder()
-                .setNotification(Notification.builder()
-                        .setTitle("noti 제목")
-                        .setBody("noti 내용")
-                        .build())
-                .addAllTokens(tokenList)
-                .build();
+        MulticastMessage message = createMulticastMessage("제목", "내용", tokenList);
 
         FirebaseApp firebaseApp = appMap.get("megabirdApp");
         BatchResponse batchResponse = FirebaseMessaging.getInstance(firebaseApp).sendMulticast(message);
 
         System.out.println("batchResponse.getSuccessCount() = " + batchResponse.getSuccessCount());
         System.out.println("batchResponse.getFailureCount() = " + batchResponse.getFailureCount());
+
+        for (SendResponse sendResponse : batchResponse.getResponses()) {
+            if (sendResponse.isSuccessful()) {
+                System.out.println("sendResponse.getMessageId() = " + sendResponse.getMessageId());
+            } else {
+                System.out.println("sendResponse.getMessageId() = " + sendResponse.getMessageId());
+                System.out.println("sendResponse.getException() = " + sendResponse.getException() + sendResponse.getException().getMessage());
+            }
+        }
 
         // 전송 실패한 토큰 뽑아내기
         if (batchResponse.getFailureCount() > 0) { //실패건수가 존재한다면
@@ -120,5 +239,16 @@ public class FCMSendByTokenTest {
             }
             System.out.println("failedTokens : " + failedTokens);
         }
+    }
+
+    private static MulticastMessage createMulticastMessage(String title, String body, List<String> tokenList) {
+        MulticastMessage message = MulticastMessage.builder()
+                .setNotification(Notification.builder()
+                        .setTitle(title)
+                        .setBody(body)
+                        .build())
+                .addAllTokens(tokenList)
+                .build();
+        return message;
     }
 }

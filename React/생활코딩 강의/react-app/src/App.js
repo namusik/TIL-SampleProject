@@ -38,18 +38,21 @@ function Article(props){
   </article>
 }
 
-function App() {;
+function App() {
   // const _mode = useState('WELCOME');
   // const mode = _mode[0];
   // const setMode = _mode[1];
   const [mode, setMode] = useState('WELCOME');
   // console.log('_mode', _mode);
+
   const [id, setId] = useState(null); //현재 값이 선택되지 않았으니까 초기값 null
+
   const TOPICS = [
     {id:1, title:'html', body:'html is ...'},
     {id:2, title:'css', body:'css is ....'},
     {id:3, title:'javascript', body:'js is ....'}
   ]
+
   let content = null;
   if(mode === 'WELCOME'){
     content = <Article title="Welcomee" body="Hello, WEB"></Article>
@@ -64,6 +67,7 @@ function App() {;
     }
     content = <Article title={title} body={body}></Article>
   }
+
   return (
     <div>
       <Header title="REACT" onChangeMode={()=>{
