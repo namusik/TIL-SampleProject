@@ -12,4 +12,5 @@ public class ElectricCar extends Car{
     String getInformation() {
         return "Electric Car" + "\nCharging Time: " + chargingTime;
     }
+
 }
