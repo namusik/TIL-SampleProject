@@ -11,6 +11,4 @@ public class ChildCircleInterface implements CircleInterface{
     public String getColor() {
         return this.color;
     }
-
-
 }
