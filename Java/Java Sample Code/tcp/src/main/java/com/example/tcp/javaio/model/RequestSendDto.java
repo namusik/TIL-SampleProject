@@ -1,4 +1,4 @@
-package com.example.tcp.model;
+package com.example.tcp.javaio.model;
 
 import lombok.Getter;
 import lombok.ToString;
