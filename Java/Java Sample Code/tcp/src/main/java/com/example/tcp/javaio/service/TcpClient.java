@@ -38,7 +38,7 @@ public class TcpClient implements ApplicationRunner {
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            
+
             String response = bufferedReader.readLine();
             log.info("<TCP CLIENT> RECEIVE DATA :: {}", response);
             String[] payloadArray = response.split(",");
