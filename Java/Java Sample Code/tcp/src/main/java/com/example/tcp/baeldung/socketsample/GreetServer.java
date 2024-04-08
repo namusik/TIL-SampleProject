@@ -1,4 +1,4 @@
-package com.example.tcp.socketsample;
+package com.example.tcp.baeldung.socketsample;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,6 +1,5 @@
-package com.example.tcp.javaio.service;
+package com.example.tcp.javaio.v1.service;
 
-import com.example.tcp.javaio.model.RequestSendDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

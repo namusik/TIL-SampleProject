@@ -1,4 +1,4 @@
-package com.example.tcp.socketsample;
+package com.example.tcp.baeldung.socketsample;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class EchoClient {
+public class GreetClient {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;

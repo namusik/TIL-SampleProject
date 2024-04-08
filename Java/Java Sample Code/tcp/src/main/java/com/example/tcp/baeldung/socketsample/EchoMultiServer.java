@@ -1,4 +1,4 @@
-package com.example.tcp.socketsample;
+package com.example.tcp.baeldung.socketsample;
 
 import lombok.extern.slf4j.Slf4j;
 

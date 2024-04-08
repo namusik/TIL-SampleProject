@@ -1,4 +1,4 @@
-package com.example.tcp.socketexception;
+package com.example.tcp.baeldung.socketexception;
 
 import java.io.IOException;
 import java.io.OutputStream;

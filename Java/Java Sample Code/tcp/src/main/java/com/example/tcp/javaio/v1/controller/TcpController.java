@@ -1,7 +1,7 @@
-package com.example.tcp.javaio.controller;
+package com.example.tcp.javaio.v1.controller;
 
-import com.example.tcp.javaio.service.TcpClient;
-import com.example.tcp.javaio.model.RequestSendDto;
+import com.example.tcp.javaio.v1.service.TcpClient;
+import com.example.tcp.javaio.v1.model.RequestSendDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

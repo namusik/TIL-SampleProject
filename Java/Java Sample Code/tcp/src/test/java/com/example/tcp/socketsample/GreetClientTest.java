@@ -1,5 +1,6 @@
 package com.example.tcp.socketsample;
 
+import com.example.tcp.baeldung.socketsample.GreetClient;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

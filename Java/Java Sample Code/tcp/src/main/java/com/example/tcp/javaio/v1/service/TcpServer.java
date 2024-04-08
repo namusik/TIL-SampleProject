@@ -1,4 +1,4 @@
-package com.example.tcp.javaio.service;
+package com.example.tcp.javaio.v1.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
