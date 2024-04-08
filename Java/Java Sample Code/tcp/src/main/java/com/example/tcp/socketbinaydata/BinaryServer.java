@@ -1,5 +1,6 @@
 package com.example.tcp.socketbinaydata;
 
+import lombok.extern.slf4j.Slf4j;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class BinaryServer {
     public void runServer(int port) {
         try {
@@ -34,8 +36,10 @@ public class BinaryServer {
                 // 현재까지 읽은 바이트 수를 추적하는 변수
                 int totalBytesRead = 0;
                 while (!end) { // 모든 데이터를 읽을 때까지 루프를 반복
+                    // 배열의 크기만큼 바이너리를 읽는다.
                     // 실제로 읽은 바이트 수
                     int currentBytesRead = dataInputStream.read(messageByte);
+                    log.info("currentByRead :: {}", currentBytesRead);
                     // 총 읽은 바이트수에 위에서 읽은 바이트 수 추가
                     totalBytesRead += currentBytesRead;
 
@@ -47,17 +51,27 @@ public class BinaryServer {
                         // 4. 문자 인코딩
                         // append()를 통해 StringBuilder 객체에 문자열을 추가. 기존의 문자열 빌더 뒤에 추가됨
                         dataString.append(new String(messageByte, 0, currentBytesRead, StandardCharsets.UTF_8));
-                    } else { // 마지막 읽기 작업에서 더 많은 데이터를 읽어들인 경우
-                        // 
-                        dataString.append(new String(messageByte,0,length - totalBytesRead + currentBytesRead,StandardCharsets.UTF_8));
+                        log.info("Message = {}", dataString);
+                    } else { // 예상한 길이보다 더 많은 데이터를 읽어들인 경우
+                        // (totalBytesRead - currentBytesRead) :: 이번 read 호출 전까지 실제로 읽은 데이터
+                        // length에서 위를 빼면 읽어야 할 남은 데이터 길이가 된다.
+                        log.info("더 많은 데이터를 읽음");
+                        dataString.append(new String(messageByte,0,length - (totalBytesRead - currentBytesRead),StandardCharsets.UTF_8));
+                    }
+                    if (dataString.length() >= length) {
+                        end = true;
                     }
                 }
+                log.info("binary data :: {}", messageByte);
+                log.info("Read {} bytes of message from client. Message = {}", length, dataString);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        BinaryServer binaryServer = new BinaryServer();
+        binaryServer.runServer(7878);
     }
 }

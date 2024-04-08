@@ -18,12 +18,13 @@ public class BinaryClient {
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
             char type = 's'; // s for string
-            String data = "This is a string of length 29";
+            String data = "This is a string of length 29 wrong length";
             byte[] dataInBytes = data.getBytes(StandardCharsets.UTF_8);
 
-            //Sending data in TLV format
+            // Sending data in TLV format
             out.writeChar(type);
-            out.writeInt(dataInBytes.length);
+//            out.writeInt(dataInBytes.length);
+            out.writeInt(29);
             out.write(dataInBytes);
         } catch (IOException e) {
             log.error("Failed to run client", e);

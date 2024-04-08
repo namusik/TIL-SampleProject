@@ -8,7 +8,7 @@ class BinaryClientTest {
     @Test
     void sendBinaryData() {
         BinaryClient binaryClient = new BinaryClient();
-        binaryClient.runClient("localhost", 8888);
+        binaryClient.runClient("localhost", 7878);
     }
 
 }
