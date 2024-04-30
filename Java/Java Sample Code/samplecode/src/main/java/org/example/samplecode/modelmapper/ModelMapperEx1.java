@@ -31,7 +31,7 @@ public class ModelMapperEx1 {
         System.out.println("personDTO2 = " + personDTO2);
 
 
-        
+
         // 2. modelmapper list mapping
         List<Person> persons = Arrays.asList(
                 new Person("John Doe", 30),
