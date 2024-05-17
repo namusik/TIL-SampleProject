@@ -35,9 +35,9 @@ public class SnsPushTest {
 
     @TestConfiguration
     static class SNSConfiguration {
-        private final String awsAccessKey = "AKIAVR72H4IJFETNPDE7";
+        private final String awsAccessKey = "";
 
-        private final String awsSecretKey = "fq7gX7S5W0sVLsxttlKyXWE0szosxbRLy1jJkkdz";
+        private final String awsSecretKey = "";
 
         @Bean
         @Primary // 실제 SNS 빈을 대체하기 위해 @Primary 어노테이션 사용
