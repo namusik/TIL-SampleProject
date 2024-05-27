@@ -16,8 +16,8 @@ public class AppRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("영화 검색하기");
-        log.info("movieId=1 ------- " + movieService.get(1L));
-        log.info("movieId=1 ------- " + movieService.get(1L));
-        log.info("movieId=1 ------- " + movieService.get(1L));
+        log.info("movieId=1 ------- {}", movieService.get(1L));
+        log.info("movieId=1 ------- {}", movieService.get(1L));
+        log.info("movieId=1 ------- {}", movieService.get(1L));
     }
 }

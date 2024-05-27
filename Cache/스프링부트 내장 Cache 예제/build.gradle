@@ -27,6 +27,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     //Cahe 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-cache'
+    // h2
+    runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
