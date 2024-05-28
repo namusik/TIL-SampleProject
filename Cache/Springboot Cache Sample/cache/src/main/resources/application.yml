@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: cache
+  datasource:
+    url: jdbc:mysql://localhost:3310/local
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    org.hibernate.SQL: info  # SQL ?? ??
+    org.hibernate.orm.jdbc.bind: info  # SQL ??? ???? ?? ??
+
