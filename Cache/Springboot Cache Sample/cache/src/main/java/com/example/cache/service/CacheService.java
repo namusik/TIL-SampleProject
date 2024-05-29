@@ -1,11 +1,8 @@
 package com.example.cache.service;
 
-import com.example.cache.model.Movie;
-import com.example.cache.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.stereotype.Service;
 
