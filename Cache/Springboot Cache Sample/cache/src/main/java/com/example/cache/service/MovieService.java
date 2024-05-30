@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MovieService {
     private final MovieRepository movieRepository;
+    private final CacheService cacheService;
 
     @Cacheable("hash")
     public String getDirector(String title) {
@@ -41,7 +42,7 @@ public class MovieService {
     }
 
     @Cacheable("hash")
-    public Movie findByDirectorAndTitle2(String title, String director) {
+    public Movie findByDirectorAndTitleDefault(String title, String director) {
         log.info("DB에서 조회");
         return movieRepository.findByDirectorAndTitle(director, title).orElseThrow(
                 IllegalArgumentException::new
@@ -50,13 +51,7 @@ public class MovieService {
 
     @CacheEvict("hash")
     public Movie save(MovieSaveDto movieSaveDto) {
-        log.info("영화 저장 :: {}", movieSaveDto);
-        return movieRepository.save(new Movie(movieSaveDto.getTitle(), movieSaveDto.getDirector()));
-    }
-
-    @CacheEvict(value = "hash", allEntries = true)
-    public Movie save2(MovieSaveDto movieSaveDto) {
-        log.info("영화 저장 :: {}", movieSaveDto);
+        log.info("영화 저장 요청 :: {}", movieSaveDto);
         return movieRepository.save(new Movie(movieSaveDto.getTitle(), movieSaveDto.getDirector()));
     }
 
@@ -75,13 +70,10 @@ public class MovieService {
 
         log.info("movie 업데이트 완료");
 
-        deleteCache(oldTitle, oldDirector);
+        // 수정한 데이터 캐시에서 삭제
+        cacheService.deleteCustomCache(oldTitle, oldDirector);
+//        cacheService.deleteDefaultCache(oldTitle, oldDirector);
 
         return updatedMovie;
-    }
-
-    @CacheEvict(value = "hash", key = "new org.springframework.cache.interceptor.SimpleKey(#oldTitle, #oldDirector)")
-    public void deleteCache(String oldTitle, String oldDirector) {
-        log.info("cache delete :: {}, {}", oldTitle, oldDirector);
     }
 }

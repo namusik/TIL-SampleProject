@@ -12,7 +12,7 @@ public class MovieController {
 
     private final MovieService movieService;
 
-    @GetMapping("/movies2/{title}")
+    @GetMapping("/directors/{title}")
     public String getDirector(@PathVariable String title) {
         return movieService.getDirector(title);
     }
@@ -27,19 +27,14 @@ public class MovieController {
         return movieService.findByDirectorAndTitle(title, director);
     }
 
-    @GetMapping("/movies2/{title}/{director}")
+    @GetMapping("/movies/default/{title}/{director}")
     public Movie findByDirectorAndTitle2(@PathVariable String title, @PathVariable String director) {
-        return movieService.findByDirectorAndTitle2(title, director);
+        return movieService.findByDirectorAndTitleDefault(title, director);
     }
 
     @PostMapping("/movies")
     public Movie save(@RequestBody MovieSaveDto movieSaveDto) {
         return movieService.save(movieSaveDto);
-    }
-
-    @PostMapping("/movies2")
-    public Movie save2(@RequestBody MovieSaveDto movieSaveDto) {
-        return movieService.save2(movieSaveDto);
     }
 
     @PutMapping("/movies/{id}")
