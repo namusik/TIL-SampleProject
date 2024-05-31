@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,13 +16,18 @@ public class CacheController {
 
     private final CacheService cacheService;
 
-    @GetMapping("/caches")
+    @GetMapping("/caches/names")
     public Collection<String> getCacheNames() {
         return cacheService.getCacheNames();
     }
 
-    @GetMapping("/caches/{name}")
-    public List<Map.Entry<Object, Object>> getCacheDataMap(@PathVariable String name) {
-        return cacheService.getAllCaches(name);
+    @GetMapping("/caches/list/{name}")
+    public List<Map.Entry<Object, Object>> getCacheDataList(@PathVariable String name) {
+        return cacheService.getCacheList(name);
+    }
+
+    @GetMapping("/caches/map/{name}")
+    public ConcurrentMap<Object, Object> getCacheDataMap(@PathVariable String name) {
+        return cacheService.getCacheMap(name);
     }
 }

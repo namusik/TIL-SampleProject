@@ -5,6 +5,7 @@ import com.example.cache.model.Movie;
 import com.example.cache.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +31,11 @@ public class MovieController {
     @GetMapping("/movies/default/{title}/{director}")
     public Movie findByDirectorAndTitle2(@PathVariable String title, @PathVariable String director) {
         return movieService.findByDirectorAndTitleDefault(title, director);
+    }
+
+    @GetMapping("/movies")
+    public List<Movie> findAll() {
+        return movieService.getMovies();
     }
 
     @PostMapping("/movies")

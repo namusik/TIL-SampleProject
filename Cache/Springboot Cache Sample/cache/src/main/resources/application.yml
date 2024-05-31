@@ -16,9 +16,9 @@ logging:
   level:
     org.hibernate.SQL: info  # SQL ?? ??
     org.hibernate.orm.jdbc.bind: info  # SQL ??? ???? ?? ??
-    org:
-      springframework:
-        cache:
-          interceptor: debug
+
+caching:
+  enabled: true
+  movieTTL: 10000
 
 
