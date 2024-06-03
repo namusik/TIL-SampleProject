@@ -17,6 +17,8 @@ public class MovieKeyGenerator implements KeyGenerator {
             key.add(param.toString());
         }
 
+        key.add("1");
+
         log.info("key: {}", key);
 
         return key.toString();
