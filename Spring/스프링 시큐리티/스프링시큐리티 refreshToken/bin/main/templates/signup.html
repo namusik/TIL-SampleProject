@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>회원가입 페이지</title>
+    <script>
+        let duplicateOk = false;
+        let validatepassword = false;
+        let samepassword= false;
+
+        $(document).ready(function () {
+            /*<![CDATA[*/
+            var user = "[[${user}]]";
+            /*]]>*/
+            console.log(user);
+            if(user !== ""){
+                alert("이미 로그인이 되어있습니다");
+                window.location.href = "/";
+            }
+        });
+
+
+        function is_password(asValue) {
+            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{4,}$/;
+            return regExp.test(asValue);
+        }
+
+        function validatePassword() {
+            let username = $('#input-nickname').val();
+            let password = $('#input-password').val();
+            if (!is_password(password)) {
+                $('.passwordvalidation').text("비밀번호는 최소 4자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9)를 무조건 포함하고 특수문자도 쓸 수 있습니다");
+                $('#input-password').focus();
+            }else if (password.indexOf(username)!== -1) {
+                $('.passwordvalidation').text("비밀번호는 닉네임과 동일한 값을 포함할 수 없습니다.");
+                $('#input-password').focus();
+            } else {
+                $('.passwordvalidation').text("사용할 수 있는 비밀번호입니다.");
+                validatepassword = true;
+            }
+        }
+
+        function isSamePassword() {
+            let password2 = $('#input-password2').val();
+            let password = $('#input-password').val();
+            if(password === password2){
+                $('.passwordsame').text("비밀번호가 일치합니다");
+                samepassword = true;
+            }else{
+                $('.passwordsame').text("비밀번호가 일치하지 않습니다");
+                $('#input-password2').focus();
+            }
+        }
+        function onclickAdmin() {
+            // Get the checkbox
+            var checkBox = document.getElementById("admin-check");
+            // Get the output text
+            var box = document.getElementById("admin-token");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true){
+                box.style.display = "block";
+            } else {
+                box.style.display = "none";
+            }
+        }
+
+        function signUp() {
+            let email = $('#input-email').val();
+            console.log(email);
+            let nickname = $('#input-nickname').val();
+            console.log(nickname);
+            let password = $('#input-password').val();
+            console.log(password);
+            let password2 = $('#input-password2').val();
+            console.log(duplicateOk, validatepassword, samepassword);
+            var checkBox = document.getElementById("admin-check");
+            let admin = checkBox.checked;
+            console.log(admin);
+            let adminToken = $('#admin-token').val();
+            console.log(adminToken);
+            if (!validatepassword||password==="") {
+                alert("비밀번호 형식을 확인해 주세요")
+                validatepassword = false;
+                samepassword = false;
+                $('.passwordvalidation').empty();
+            }else if(!samepassword||password2===""){
+                alert("2차 비밀번호 확인을 해주세요")
+                samepassword = false;
+                $('.passwordsame').empty();
+            }else {
+                let data = {'email': email, 'nickname': nickname, 'password': password,'admin' : admin, 'adminToken' : adminToken};
+                $.ajax({
+                    type: "POST",
+                    url: "/user/signup",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (response) {
+                        alert("회원가입 완료");
+                        window.location.href = "/user/login";
+
+                    },
+                    error: function (result) {
+                        console.log(result["responseJSON"]);
+                        alert(result["responseJSON"].msg)
+                    },
+                });
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+<div id="login-form">
+    <div id="login-title">Sign up Select Shop</div>
+    <div>
+        <div class="login-id-label">이메일</div>
+        <input type="text" name="email" placeholder="Email" class="login-input-box" id="input-email" >
+
+        <div class="login-id-label">닉네임</div>
+        <input type="text" name="nickname" placeholder="Nickname" class="login-input-box" id="input-nickname" >
+        <div class="nicknamevalidation"></div>
+
+        <div class="login-id-label">비밀번호</div>
+        <input type="password" name="password" class="login-input-box" id = "input-password" onkeyup="validatePassword()">
+        <div class="passwordvalidation"></div>
+
+        <div class="login-id-label">비밀번호확인</div>
+        <input type="password" name="password2" class="login-input-box" id = "input-password2" onkeyup="isSamePassword()">
+        <div class="passwordsame"></div>
+        <div>
+            <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자
+            <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box" style="display:none">
+        </div>
+        <button id="login-id-submit" onclick="signUp()">회원 가입</button>
+    </div>
+</div>
+</body>
+</html>

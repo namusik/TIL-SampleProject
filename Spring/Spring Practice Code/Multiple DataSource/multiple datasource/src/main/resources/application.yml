@@ -1,12 +1,12 @@
 spring:
   datasource:
-    todos:
+    write:
       url: jdbc:mysql://localhost:3310/local
       username: root
       password:
       driver-class-name: com.mysql.cj.jdbc.Driver
-    topics:
-      url: jdbc:mysql://localhost:3307/local
+    read:
+      url: jdbc:mysql://localhost:3307/megabird
       username: root
       password:
       driver-class-name: com.mysql.cj.jdbc.Driver
