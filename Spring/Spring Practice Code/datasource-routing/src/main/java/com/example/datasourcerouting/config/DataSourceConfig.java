@@ -3,12 +3,10 @@ package com.example.datasourcerouting.config;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
-
 import javax.sql.DataSource;
 import java.util.HashMap;
 
@@ -40,23 +38,23 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public DataSource routingDataSource(
-        @Qualifier("writeDataSource") DataSource writeDataSource, @Qualifier("readDataSource") DataSource readDataSource
-    ) {
-        DataSourceRouter dataSourceRouter = new DataSourceRouter();
+    public DataSource dynamicRoutingDataSource(@Qualifier("writeDataSource") DataSource writeDataSource, @Qualifier("readDataSource") DataSource readDataSource) {
 
         HashMap<Object, Object> dataSourceMap = new HashMap<>();
         dataSourceMap.put("write", writeDataSource);
         dataSourceMap.put("read", readDataSource);
-        dataSourceRouter.setTargetDataSources(dataSourceMap);
 
-        dataSourceRouter.setDefaultTargetDataSource(writeDataSource);
-        return dataSourceRouter;
+        DynamicRoutingDataSource dynamicRoutingDataSource = new DynamicRoutingDataSource();
+        dynamicRoutingDataSource.setTargetDataSources(dataSourceMap);
+        dynamicRoutingDataSource.setDefaultTargetDataSource(writeDataSource);
+
+        return dynamicRoutingDataSource;
     }
+
 
     @Primary
     @Bean
-    public DataSource dataSource(@Qualifier("routingDataSource") DataSource routingDataSource) {
+    public DataSource dataSource(@Qualifier("dynamicRoutingDataSource") DataSource routingDataSource) {
         return new LazyConnectionDataSourceProxy(routingDataSource);
     }
 }
