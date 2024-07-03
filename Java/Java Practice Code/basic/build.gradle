@@ -35,6 +35,9 @@ dependencies {
 
     //modelmapper
     implementation 'org.modelmapper:modelmapper:3.2.0'
+
+    // https://mvnrepository.com/artifact/org.wiremock/wiremock
+    testImplementation "org.wiremock:wiremock:3.8.0"
 }
 
 tasks.named('test') {
