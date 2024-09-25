@@ -1,4 +1,4 @@
-package org.design.pattern.facade_pattern.subclasses;
+package org.design.pattern.structural.facade_pattern.subclasses;
 
 public class Memory {
     public void load() {

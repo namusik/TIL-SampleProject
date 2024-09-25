@@ -1,8 +1,8 @@
-package org.design.pattern.facade_pattern;
+package org.design.pattern.structural.facade_pattern;
 
-import org.design.pattern.facade_pattern.subclasses.CPU;
-import org.design.pattern.facade_pattern.subclasses.HardDrive;
-import org.design.pattern.facade_pattern.subclasses.Memory;
+import org.design.pattern.structural.facade_pattern.subclasses.CPU;
+import org.design.pattern.structural.facade_pattern.subclasses.HardDrive;
+import org.design.pattern.structural.facade_pattern.subclasses.Memory;
 
 public class ComputerFacade {
     private CPU cpu;
