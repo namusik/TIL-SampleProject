@@ -1,10 +1,9 @@
 package org.design.pattern.factory_method_pattern;
 
-import org.assertj.core.api.Assertions;
+import org.design.pattern.creational_patterns.factory_method.*;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MotorVehicleFactoryTest {
     @Test

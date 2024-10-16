@@ -1,6 +1,6 @@
 package org.design.pattern.facade_pattern;
 
-import org.design.pattern.structural.facade_pattern.ComputerFacade;
+import org.design.pattern.structural_patterns.facade.ComputerFacade;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
