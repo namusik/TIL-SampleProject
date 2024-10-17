@@ -1,5 +1,9 @@
 package org.design.pattern.creational_patterns.singleton;
 
+import org.design.pattern.creational_patterns.singleton.basic_singleton.Button;
+import org.design.pattern.creational_patterns.singleton.basic_singleton.Label;
+import org.design.pattern.creational_patterns.singleton.basic_singleton.TextField;
+import org.design.pattern.creational_patterns.singleton.basic_singleton.Theme;
 import org.junit.jupiter.api.Test;
 
 class SingletonTest {

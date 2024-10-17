@@ -1,4 +1,4 @@
-package org.design.pattern.creational_patterns.singleton;
+package org.design.pattern.creational_patterns.singleton.basic_singleton;
 
 import lombok.AllArgsConstructor;
 
