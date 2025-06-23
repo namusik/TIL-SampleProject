@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>S3 object</title>
+</head>
+<body>
+<div class="container">
+    <h3>S3 파일</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"><i class="fas fa-file"></i></th>
+            <th scope="col">id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tr th:each="file:${fileList}">
+            <td th:text="${file.id}"></td>
+            <td th:text="${file.title}"></td>
+            <td>
+                <img id="image" th:src="${file.s3Url}">
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
